@@ -1,0 +1,31 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,body,#root {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  flex-direction: column;
+}
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-self: flex-start;
+  justify-content: flex-start;
+  justify-self: flex-start;
+  width: 100%;
+  min-height: 10px;
+  height: 10px;
+  flex-basis: initial;
+  flex-shrink: 0
+}
+.container{
+  display: flex;
+  background-image: linear-gradient(to bottom right, #fff7ed, #ffffff, #fff7ed); /* from-orange-50 via-white to-orange-50 */
+  flex:1;
+  overflow-y: auto;
+}

@@ -1,0 +1,70 @@
+nav {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    align-self: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    justify-content: space-between;
+    gap: 3vh;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border: #1a1a1a;
+}
+.list1{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3vh;
+}
+.list1 img {
+    display: flex;
+    flex-direction: row;
+    width: 50px;
+    height: 50px;
+    padding: 1px;
+    border-radius: 1rem;
+    margin-left: 15px;
+}
+
+.list1 {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    align-items: center;
+    justify-self: stretch;
+    gap: 5vh;
+    margin: 0;
+}
+
+.list1 li a {
+    text-decoration-color: black;
+    color: black;
+    font-size: 0.8rem;
+}
+
+.list1 li a:hover {
+    text-decoration-color: black;
+    color: orange;
+}
+.list2{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.list2 input{
+    display: flex;
+    font-size: 0.8rem;
+}
+.list2 span{
+    display: flex;
+    width: 50px;
+    height: 15px;
+}
+.list2 img#profile {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    margin-right: 15px;
+}
