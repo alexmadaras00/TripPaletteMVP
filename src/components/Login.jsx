@@ -1,80 +1,184 @@
-import Link from "next/link"
-import { ArrowRight } from "lucide-react"
+import {signInWithEmailAndPassword, createUserWithEmailAndPassword} from "firebase/auth";
+import {useEffect, useState} from "react";
+import tripPalette from "../assets/trip_palette.png"
+import {auth} from "../auth/firebase.jsx";
+import "../styles/login.css"
+import {Link, useNavigate} from 'react-router-dom';
+import ScrollToTop from "./ScrollToTop.jsx";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 
- function Login() {
+export function Login({mode}) {
+    const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [passwordMatch, setPasswordMatch] = useState(true);
+    // const [name, setName] = useState("");
+    // const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        if (mode === "signup")
+            setPasswordMatch(password === confirmPassword);
+    }, [password, confirmPassword, mode]);
+
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        if (mode === "signup" && password !== confirmPassword) {
+            alert("Passwords do not match!");
+            return;
+        }
+        if (mode === "login") {
+            await signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in
+                    const user = userCredential.user;
+                    console.log(user);
+                    navigate("/home")
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorCode, errorMessage);
+                });
+        } else {
+            await createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in
+                    const user = userCredential.user;
+                    console.log(user);
+                    navigate("/home");
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorCode, errorMessage);
+                });
+        }
+    }
+
+
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
-            <div className="w-full max-w-md space-y-8">
-                <div className="text-center">
-                    <h1 className="text-3xl font-bold">Trip Palette AI</h1>
-                    <p className="mt-2 text-gray-600">Sign in to your account</p>
-                </div>
+        <div className="login-page">
+            <ScrollToTop/>
+            <div className="header">
+                <img className="logo" src={tripPalette} alt="logo"/>
+                <h1 className="title">{mode === "login" ? 'Welcome Back' : 'Create an Account'}</h1>
+                <sub
+                    className="subtitle">{mode === "login" ? 'Sign in to continue planning your perfect trips' : 'Join thousands of travelers planning smarter trips with AI'}</sub>
+            </div>
+            <div className="login-form">
+                <form className="form" onSubmit={handleLogin}>
+                    {mode === "signup" && (<div className="name-fields">
+                        <p className="text-name">First Name</p>
+                        <p className="text-name">Last Name</p>
+                        <input type="text"
+                               className="input-name"
+                               placeholder="First Name"
+                               value={firstName}
+                               onChange={(e) => setFirstName(e.target.value)}
+                               required
+                        />
 
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Sign In</CardTitle>
-                        <CardDescription>Enter your email and password to access your account</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                        <div className="space-y-2">
-                            <Label htmlFor="email">Email</Label>
-                            <Input id="email" type="email" placeholder="your.email@example.com" />
+                        <input
+                            type="text"
+                            className="input-name"
+                            placeholder="Last Name"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                            required/></div>)}
+                    <p className="title-text">E-mail Address</p>
+                    <input
+                        type="email"
+                        className="input-text"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                    <div className="password-text">
+                        <p className={mode === "login" ? 'password-login-text' : 'password-register-text'}>Password</p>
+                        {mode === "login" && (
+                            <Link className="form-link-password" to="/forgot-password"><p
+                                className="title-forgot">Forgot
+                                password?</p>
+                            </Link>)}
+                    </div>
+
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        className="input-text"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+
+                    {mode === "signup" &&
+                        <div className="confirm-password">
+                            <p className="title-text">Confirm Password</p>
+                            <input
+                                type="password"
+                                placeholder="Confirm password"
+                                className="input-text"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                required
+                            />
                         </div>
-                        <div className="space-y-2">
-                            <div className="flex items-center justify-between">
-                                <Label htmlFor="password">Password</Label>
-                                <Link href="/forgot-password" className="text-sm text-orange-500 hover:text-orange-600">
-                                    Forgot password?
+                    }
+                    {!passwordMatch && (
+                        <p style={{color: 'red'}}>Passwords do not match</p>
+                    )}
+                    {/* Terms and Privacy */}
+                    {mode === "signup" && (
+                        <div className="form-checkbox-wrapper">
+                            <input type="checkbox" id="terms" className="form-checkbox"/>
+                            <label htmlFor="terms" className="form-checkbox-label">
+                                I agree to the{" "}
+                                <Link to="/terms" className="form-link">Terms of Service
+                                </Link>{" "}
+                                and{" "}
+                                <Link to="/privacy" className="form-link">
+                                    Privacy Policy
                                 </Link>
-                            </div>
-                            <Input id="password" type="password" />
-                        </div>
-                    </CardContent>
-                    <CardFooter className="flex flex-col space-y-4">
-                        <Button className="w-full bg-orange-500 hover:bg-orange-600">
-                            Sign In
-                            <ArrowRight className="ml-2 h-4 w-4" />
-                        </Button>
-                        <div className="text-center text-sm">
-                            Don&apos;t have an account?{" "}
-                            <Link href="/signup" className="text-orange-500 hover:text-orange-600 font-medium">
-                                Sign up
-                            </Link>
-                        </div>
-                    </CardFooter>
-                </Card>
+                            </label>
+                        </div>)}
 
-                <div className="flex items-center justify-center space-x-4">
-                    <Button variant="outline" className="w-full">
-                        <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
-                            <path
-                                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                                fill="#4285F4"
-                            />
-                            <path
-                                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                                fill="#34A853"
-                            />
-                            <path
-                                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                                fill="#FBBC05"
-                            />
-                            <path
-                                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                                fill="#EA4335"
-                            />
-                            <path d="M1 1h22v22H1z" fill="none" />
-                        </svg>
-                        Sign in with Google
-                    </Button>
+                    {/* Marketing Emails */}
+                    {mode === "signup" && (<div className="form-checkbox-wrapper">
+                        <input type="checkbox" id="marketing" className="form-checkbox"/>
+                        <label htmlFor="marketing" className="form-checkbox-label">
+                            Send me travel tips, destination guides, and special offers
+                        </label>
+                    </div>)}
+                    <button type="submit" disabled={!passwordMatch}
+                            className="form-button">
+                        {mode === "login" ? 'Login' : 'Create Account'}
+                    </button>
+                </form>
+
+                <div className="auth-switch">
+                    <p className="form-link" onClick={() => {
+                        if (mode === "login") {
+                            navigate("/signup");
+                            console.log(window.scrollY);
+                            window.scrollTo(0, 0);
+                            setTimeout(() => window.scrollTo(0, 0), 200);
+
+                        } else {
+                            navigate("/login");
+                            setTimeout(() => window.scrollTo(0, 0), 200);
+                        }
+                    }}>
+                        {mode === "login" ? "Don't have an account? Create Account" : "Already have an account? Login"}
+
+                    </p>
                 </div>
             </div>
+
         </div>
-    )
+    );
 }
-export default Login;
