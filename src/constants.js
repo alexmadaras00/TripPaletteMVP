@@ -147,4 +147,67 @@ export const steps = [
     {number: 3, title: "Travelers", description: "Who's traveling?"},
     {number: 4, title: "Interests", description: "What do you enjoy?"},
 ]
-
+export const travelInterests = [
+    {
+        id: "Food",
+        icon: "🍽️",
+        title: "Food & Dining",
+        description: "Local cuisine and restaurants"
+    },
+    {
+        id: "History",
+        icon: "🏛️",
+        title: "History & Culture",
+        description: "Museums and historical sites",
+    },
+    {
+        id: "Arts",
+        icon: "🎨",
+        title: "Arts & Entertainment",
+        description: "Galleries, shows, and events",
+    },
+    {
+        id: "Nature",
+        icon: "🏞️",
+        title: "Nature & Outdoors",
+        description: "Parks, hiking, and wildlife"
+    },
+    {
+        id: "Shopping",
+        icon: "🛍️",
+        title: "Shopping",
+        description: "Markets, malls, and boutiques"
+    },
+    {
+        id: "Nightlife",
+        icon: "🌙",
+        title: "Nightlife",
+        description: "Bars, clubs, and evening entertainment",
+    },
+]
+export const travelGroups = [
+    {id: "Solo", icon: "👤", title: "Solo"},
+    {id: "Couple", icon: "👫", title: "Couple"},
+    {id: "Family", icon: "👨‍👩‍👧‍👦", title: "Family"},
+    {id: "Friends", icon: "👥", title: "Friends"},
+]
+export const travelStyles = [
+    {
+        id: "Relaxer",
+        icon: "🏖️",
+        title: "Relaxer",
+        description: "Beaches, spas, resorts"
+    },
+    {
+        id: "Explorer",
+        icon: "🏛️",
+        title: "Explorer",
+        description: "Sightseeing, culture, history"
+    },
+    {
+        id: "Adventurer",
+        icon: "🏔️",
+        title: "Adventurer",
+        description: "Hiking, sports, thrills"
+    },
+];

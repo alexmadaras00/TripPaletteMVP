@@ -1,9 +1,10 @@
 import Autocomplete from "react-google-autocomplete";
+import {travelStyles} from "../../constants.js";
 
 export default function Step1({homeLocation,setHomeLocation, selectedTravelStyle,setSelectedTravelStyle}) {
     const API_KEY =  import.meta.env.VITE_GOOGLE_MAPS_KEY;
 
-    return (  <div className="form-container">
+    return (<div className="form-container">
         <div className="section-title">Where are you traveling from?</div>
         <div className="section-subtitle">
             Enter your home location so we can suggest destinations that are perfect for you
@@ -24,26 +25,7 @@ export default function Step1({homeLocation,setHomeLocation, selectedTravelStyle
             Travel Style
         </div>
         <div className="grid-3">
-            {[
-                {
-                    id: "Relaxer",
-                    icon: "🏖️",
-                    title: "Relaxer",
-                    description: "Beaches, spas, resorts"
-                },
-                {
-                    id: "Explorer",
-                    icon: "🏛️",
-                    title: "Explorer",
-                    description: "Sightseeing, culture, history"
-                },
-                {
-                    id: "Adventurer",
-                    icon: "🏔️",
-                    title: "Adventurer",
-                    description: "Hiking, sports, thrills"
-                },
-            ].map((style) => (
+            {travelStyles.map((style) => (
                 <div
                     key={style.id}
                     className={`card ${selectedTravelStyle === style.id ? "selected" : ""}`}

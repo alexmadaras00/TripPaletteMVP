@@ -7,9 +7,11 @@ import "../styles/plan-trip.css"
 import {Link, useNavigate} from "react-router-dom";
 import Autocomplete from "react-google-autocomplete";
 import {steps} from "../constants.js";
-import StepCard from "./StepCard.jsx";
-import Step1 from "./Step1.jsx";
-import Step2 from "./Step2.jsx";
+import StepCard from "./steps/StepCard.jsx";
+import Step1 from "./steps/Step1.jsx";
+import Step2 from "./steps/Step2.jsx";
+import Step3 from "./steps/Step3.jsx";
+import Step4 from "./steps/Step4.jsx";
 
 export default function PlanTrip() {
     const [currentStep, setCurrentStep] = useState(1);
@@ -54,16 +56,9 @@ export default function PlanTrip() {
     const tripDuration = calculateTripDuration();
     const budgetRange = getDynamicBudgetRange();
 
-
     const navigate = useNavigate();
 
-    const handleInterestToggle = (interest) => {
-        if (selectedInterests.includes(interest)) {
-            setSelectedInterests(selectedInterests.filter((item) => item !== interest))
-        } else {
-            setSelectedInterests([...selectedInterests, interest])
-        }
-    }
+
 
     return (
         <div>
@@ -96,117 +91,11 @@ export default function PlanTrip() {
                         )}
 
                         {currentStep === 3 && (
-                            <div className="form-container">
-                                <div className="section-title">Who's traveling?</div>
-                                <div className="section-subtitle">Tell us about your travel group</div>
-
-                                <div className="section-title" style={{fontSize: "1rem", marginBottom: "1rem"}}>
-                                    Travel Group
-                                </div>
-                                <div className="grid-4">
-                                    {[
-                                        {id: "Solo", icon: "👤", title: "Solo"},
-                                        {id: "Couple", icon: "👫", title: "Couple"},
-                                        {id: "Family", icon: "👨‍👩‍👧‍👦", title: "Family"},
-                                        {id: "Friends", icon: "👥", title: "Friends"},
-                                    ].map((group) => (
-                                        <div
-                                            key={group.id}
-                                            className={`card ${selectedTravelGroup === group.id ? "selected" : ""}`}
-                                            onClick={() => setSelectedTravelGroup(group.id)}
-                                        >
-                                            <div className="card-content" style={{textAlign: "center"}}>
-                                                <div style={{fontSize: "2rem", marginBottom: "1rem"}}>{group.icon}</div>
-                                                <div className="card-title">{group.title}</div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                <div className="form-grid" style={{marginTop: "2rem"}}>
-                                    <div className="input-group">
-                                        <label className="input-label">Adults</label>
-                                        <select className="input-field select-field">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4+</option>
-                                        </select>
-                                    </div>
-                                    <div className="input-group">
-                                        <label className="input-label">Children</label>
-                                        <select className="input-field select-field">
-                                            <option>0</option>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3+</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                            <Step3 selectedTravelGroup={selectedTravelGroup} setSelectedTravelGroup={setSelectedTravelGroup} />
                         )}
 
                         {currentStep === 4 && (
-                            <div className="form-container">
-                                <div className="section-title">What are your interests?</div>
-                                <div className="section-subtitle">Help us personalize your trip recommendations</div>
-
-                                <div className="grid-3">
-                                    {[
-                                        {
-                                            id: "Food",
-                                            icon: "🍽️",
-                                            title: "Food & Dining",
-                                            description: "Local cuisine and restaurants"
-                                        },
-                                        {
-                                            id: "History",
-                                            icon: "🏛️",
-                                            title: "History & Culture",
-                                            description: "Museums and historical sites",
-                                        },
-                                        {
-                                            id: "Arts",
-                                            icon: "🎨",
-                                            title: "Arts & Entertainment",
-                                            description: "Galleries, shows, and events",
-                                        },
-                                        {
-                                            id: "Nature",
-                                            icon: "🏞️",
-                                            title: "Nature & Outdoors",
-                                            description: "Parks, hiking, and wildlife"
-                                        },
-                                        {
-                                            id: "Shopping",
-                                            icon: "🛍️",
-                                            title: "Shopping",
-                                            description: "Markets, malls, and boutiques"
-                                        },
-                                        {
-                                            id: "Nightlife",
-                                            icon: "🌙",
-                                            title: "Nightlife",
-                                            description: "Bars, clubs, and evening entertainment",
-                                        },
-                                    ].map((interest) => (
-                                        <div
-                                            key={interest.id}
-                                            className={`card ${selectedInterests.includes(interest.id) ? "selected" : ""}`}
-                                            onClick={() => handleInterestToggle(interest.id)}
-                                        >
-                                            <div className="card-content" style={{textAlign: "center"}}>
-                                                <div style={{
-                                                    fontSize: "2rem",
-                                                    marginBottom: "1rem"
-                                                }}>{interest.icon}</div>
-                                                <div className="card-title">{interest.title}</div>
-                                                <div className="card-description">{interest.description}</div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
+                            <Step4 selectedInterests={selectedInterests} setSelectedInterests={setSelectedInterests} />
                         )}
 
                         {/* Navigation Buttons */}
@@ -225,11 +114,11 @@ export default function PlanTrip() {
                                     if (currentStep === 4) {
                                         // Save user preferences to localStorage
                                         const userPreferences = {
-                                            homeLocation,
+                                            homeLocation: homeLocation,
                                             travelStyle: selectedTravelStyle,
-                                            startDate,
-                                            endDate,
-                                            budgetValue,
+                                            startDate: startDate,
+                                            endDate: endDate,
+                                            budgetValue: budgetValue,
                                             travelGroup: selectedTravelGroup,
                                             adults: 2, // You can make this dynamic
                                             children: 0,
