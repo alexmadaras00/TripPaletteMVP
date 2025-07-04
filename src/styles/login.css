@@ -159,17 +159,26 @@
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    margin-inline: 2rem;
+    margin: 0 2rem;
+    align-self: flex-start;
+}
+
+.form-checkbox-wrapper-marketing {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin: 0 2rem;
     align-self: flex-start;
 }
 
 .form-checkbox {
     margin-right: 0.5rem;
-    margin-top: 0.25rem;
+    margin-top: 0;
 
 }
 
 .form-checkbox-label {
+    margin-top: 0;
     font-size: 0.875rem;
     color: #6b7280;
 }

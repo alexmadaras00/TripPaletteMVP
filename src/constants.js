@@ -141,4 +141,10 @@ export const allDestinations = [
         flag: "🇬🇷",
     },
 ]
+export const steps = [
+    {number: 1, title: "Home Location", description: "Where are you traveling from?"},
+    {number: 2, title: "Dates & Budget", description: "When and how much?"},
+    {number: 3, title: "Travelers", description: "Who's traveling?"},
+    {number: 4, title: "Interests", description: "What do you enjoy?"},
+]
 

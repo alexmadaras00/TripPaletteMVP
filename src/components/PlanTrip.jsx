@@ -1,21 +1,30 @@
-"use client"
+
 
 import {useState} from "react"
 import Navigation from "../components/Navigation.jsx";
 import "../styles/navbar.css"
 import "../styles/plan-trip.css"
 import {Link, useNavigate} from "react-router-dom";
+import Autocomplete from "react-google-autocomplete";
+import {steps} from "../constants.js";
+import StepCard from "./StepCard.jsx";
+import Step1 from "./Step1.jsx";
+import Step2 from "./Step2.jsx";
 
 export default function PlanTrip() {
-    const [currentStep, setCurrentStep] = useState(1)
-    const [selectedTravelStyle, setSelectedTravelStyle] = useState("Explorer")
-    const [budgetValue, setBudgetValue] = useState(3100)
-    const [selectedTravelGroup, setSelectedTravelGroup] = useState("Couple")
-    const [selectedInterests, setSelectedInterests] = useState([])
-    const [startDate, setStartDate] = useState("")
-    const [endDate, setEndDate] = useState("")
+    const [currentStep, setCurrentStep] = useState(1);
+    const [selectedTravelStyle, setSelectedTravelStyle] = useState("Explorer");
+    const [budgetValue, setBudgetValue] = useState(3100);
+    const [selectedTravelGroup, setSelectedTravelGroup] = useState("Couple");
+    const [selectedInterests, setSelectedInterests] = useState([]);
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
     // Change destination to homeLocation
-    const [homeLocation, setHomeLocation] = useState("")
+    const [homeLocation, setHomeLocation] = useState("");
+
+    // eslint-disable-next-line no-undef
+
+
 
     // Add this function at the top of the component, after the state declarations
     const calculateTripDuration = () => {
@@ -26,7 +35,7 @@ export default function PlanTrip() {
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
             return diffDays
         }
-        return 7 // default to 7 days
+        return 0 // default to 0 days
     }
 
     const getDynamicBudgetRange = () => {
@@ -42,15 +51,10 @@ export default function PlanTrip() {
         }
     }
 
-    const tripDuration = calculateTripDuration()
-    const budgetRange = getDynamicBudgetRange()
+    const tripDuration = calculateTripDuration();
+    const budgetRange = getDynamicBudgetRange();
 
-    const steps = [
-        {number: 1, title: "Home Location", description: "Where are you traveling from?"},
-        {number: 2, title: "Dates & Budget", description: "When and how much?"},
-        {number: 3, title: "Travelers", description: "Who's traveling?"},
-        {number: 4, title: "Interests", description: "What do you enjoy?"},
-    ]
+
     const navigate = useNavigate();
 
     const handleInterestToggle = (interest) => {
@@ -63,6 +67,7 @@ export default function PlanTrip() {
 
     return (
         <div>
+
             <Navigation/>
             <div className="page-container">
                 <div className="page-content">
@@ -75,35 +80,7 @@ export default function PlanTrip() {
                     <div className="page-section">
                         <div className="grid-4">
                             {steps.map((step) => (
-                                <div
-                                    key={step.number}
-                                    className={`stat-card ${currentStep === step.number ? "selected" : ""}`}
-                                    style={{
-                                        borderColor: currentStep === step.number ? "#ff6b35" : "transparent",
-                                    }}
-                                >
-                                    <div
-                                        className="stat-number"
-                                        style={{
-                                            backgroundColor: currentStep >= step.number ? "#ff6b35" : "#e5e7eb",
-                                            color: currentStep >= step.number ? "white" : "#6b7280",
-                                            width: "3rem",
-                                            height: "3rem",
-                                            borderRadius: "50%",
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            margin: "0 auto 1rem",
-                                            fontSize: "1.25rem",
-                                        }}
-                                    >
-                                        {step.number}
-                                    </div>
-                                    <div className="stat-label" style={{fontWeight: "600", marginBottom: "0.5rem"}}>
-                                        {step.title}
-                                    </div>
-                                    <div className="stat-label">{step.description}</div>
-                                </div>
+                              <StepCard currentStep={currentStep} key={step.id} step={step} />
                             ))}
                         </div>
                     </div>
@@ -111,132 +88,11 @@ export default function PlanTrip() {
                     {/* Current Step Content */}
                     <div className="page-section">
                         {currentStep === 1 && (
-                            <div className="form-container">
-                                <div className="section-title">Where are you traveling from?</div>
-                                <div className="section-subtitle">
-                                    Enter your home location so we can suggest destinations that are perfect for you
-                                </div>
-
-                                <div className="input-group">
-                                    <label className="input-label">Home Location</label>
-                                    <input
-                                        type=""
-
-                                        className="input-field"
-                                        placeholder="City, country, or region"
-                                        value={homeLocation}
-                                        onChange={(e) => setHomeLocation(e.target.value)}
-                                    />
-                                </div>
-
-                                <div className="section-title" style={{marginTop: "2rem"}}>
-                                    Travel Style
-                                </div>
-                                <div className="grid-3">
-                                    {[
-                                        {
-                                            id: "Relaxer",
-                                            icon: "🏖️",
-                                            title: "Relaxer",
-                                            description: "Beaches, spas, resorts"
-                                        },
-                                        {
-                                            id: "Explorer",
-                                            icon: "🏛️",
-                                            title: "Explorer",
-                                            description: "Sightseeing, culture, history"
-                                        },
-                                        {
-                                            id: "Adventurer",
-                                            icon: "🏔️",
-                                            title: "Adventurer",
-                                            description: "Hiking, sports, thrills"
-                                        },
-                                    ].map((style) => (
-                                        <div
-                                            key={style.id}
-                                            className={`card ${selectedTravelStyle === style.id ? "selected" : ""}`}
-                                            onClick={() => setSelectedTravelStyle(style.id)}
-                                        >
-                                            <div className="card-content" style={{textAlign: "center"}}>
-                                                <div style={{fontSize: "2rem", marginBottom: "1rem"}}>{style.icon}</div>
-                                                <div className="card-title">{style.title}</div>
-                                                <div className="card-description">{style.description}</div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
+                          <Step1 homeLocation={homeLocation} setHomeLocation={setHomeLocation} selectedTravelStyle={selectedTravelStyle} setSelectedTravelStyle={setSelectedTravelStyle} />
                         )}
 
                         {currentStep === 2 && (
-                            <div className="form-container">
-                                <div className="section-title">When and how much?</div>
-                                <div className="section-subtitle">Let us know your travel dates and budget</div>
-
-                                <div className="form-grid">
-                                    <div className="input-group">
-                                        <label className="input-label">Start Date</label>
-                                        <input
-                                            type="date"
-                                            className="input-field"
-                                            value={startDate}
-                                            onChange={(e) => setStartDate(e.target.value)}
-                                            min={new Date().toISOString().split("T")[0]} // Prevent past dates
-                                        />
-                                    </div>
-                                    <div className="input-group">
-                                        <label className="input-label">End Date</label>
-                                        <input
-                                            type="date"
-                                            className="input-field"
-                                            value={endDate}
-                                            onChange={(e) => setEndDate(e.target.value)}
-                                            min={startDate || new Date().toISOString().split("T")[0]} // End date must be after start date
-                                        />
-                                    </div>
-                                </div>
-
-                                {/* Add validation message */}
-                                {endDate && startDate && new Date(endDate) <= new Date(startDate) && (
-                                    <div
-                                        style={{
-                                            color: "#ef4444",
-                                            fontSize: "0.875rem",
-                                            marginTop: "0.5rem",
-                                            textAlign: "center",
-                                        }}
-                                    >
-                                        End date must be after start date
-                                    </div>
-                                )}
-
-                                <div className="input-group">
-                                    <label className="input-label">
-                                        Budget (per person) - {tripDuration} {tripDuration === 1 ? "day" : "days"}
-                                    </label>
-                                    <input
-                                        type="range"
-                                        min={budgetRange.min}
-                                        max={budgetRange.max}
-                                        value={budgetValue}
-                                        onChange={(e) => setBudgetValue(Number.parseInt(e.target.value))}
-                                        className="input-field"
-                                        style={{height: "2rem"}}
-                                    />
-                                    <div
-                                        style={{display: "flex", justifyContent: "space-between", marginTop: "0.5rem"}}>
-                                        <span>Budget (${budgetRange.dailyMin}/day)</span>
-                                        <div className="budget-display">
-                                            <div>${budgetValue} total</div>
-                                            <div style={{fontSize: "0.75rem", color: "#6b7280"}}>
-                                                ${Math.round(budgetValue / tripDuration)}/day
-                                            </div>
-                                        </div>
-                                        <span>Luxury (${budgetRange.dailyMax}/day)</span>
-                                    </div>
-                                </div>
-                            </div>
+                            <Step2 budgetValue={budgetValue} setBudgetValue={setBudgetValue} budgetRange={budgetRange} startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} tripDuration={tripDuration} />
                         )}
 
                         {currentStep === 3 && (

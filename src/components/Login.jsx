@@ -36,7 +36,7 @@ export function Login({mode}) {
                     // Signed in
                     const user = userCredential.user;
                     console.log(user);
-                    navigate("/home")
+                    navigate("/home");
                 })
                 .catch((error) => {
                     const errorCode = error.code;
@@ -148,7 +148,7 @@ export function Login({mode}) {
                         </div>)}
 
                     {/* Marketing Emails */}
-                    {mode === "signup" && (<div className="form-checkbox-wrapper">
+                    {mode === "signup" && (<div className="form-checkbox-wrapper-marketing">
                         <input type="checkbox" id="marketing" className="form-checkbox"/>
                         <label htmlFor="marketing" className="form-checkbox-label">
                             Send me travel tips, destination guides, and special offers
@@ -166,12 +166,13 @@ export function Login({mode}) {
                             navigate("/signup");
                             console.log(window.scrollY);
                             window.scrollTo(0, 0);
-                            setTimeout(() => window.scrollTo(0, 0), 200);
+
 
                         } else {
                             navigate("/login");
-                            setTimeout(() => window.scrollTo(0, 0), 200);
+
                         }
+                        setTimeout(() => window.scrollTo(0, 0), 200);
                     }}>
                         {mode === "login" ? "Don't have an account? Create Account" : "Already have an account? Login"}
 
