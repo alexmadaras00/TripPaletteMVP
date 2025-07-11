@@ -1,6 +1,6 @@
 import './App.css'
 
-import Navigation from "./components/Navigation.jsx";
+import NavBar from "./components/NavBar.jsx";
 import HomePage from "./components/HomePage.jsx";
 import {Login} from "./components/Login.jsx";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
@@ -8,7 +8,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import ForgotPassword from "./components/ForgotPassword.jsx";
 import PlanTrip from "./components/PlanTrip.jsx";
-import DestinationRecommendations from "./components/DestinationRecommendation.jsx";
+import DestinationRecommendations from "./components/DestinationRecommendations.jsx";
 import GoogleForm from "./components/GoogleForm.jsx";
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
                 <Route path="/home" element={
                     <div className="App">
                         <div id="header" className="navigation-bar">
-                            <Navigation />
+                            <NavBar />
                         </div>
                         <div id="content" className="container">
                             <HomePage />
@@ -31,7 +31,7 @@ function App() {
                 <Route path="/" element={
                     <div className="App">
                         <div id="header" className="navigation-bar">
-                            <Navigation/>
+                            <NavBar/>
                         </div>
                         <div id="content" className="container">
                             <HomePage/>

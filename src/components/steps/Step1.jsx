@@ -1,26 +1,10 @@
 import Autocomplete from "react-google-autocomplete";
 
 
-export default function Step1({homeLocation, setHomeLocation, travelPace, setTravelPace}) {
+export default function Step1({homeLocation, setHomeLocation, travelPace, setTravelPace, getLabel}) {
     const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_KEY;
 
-    const getLabel = (travelPace) => {
-        switch (true) {
-            case travelPace < 20:
-                return `Relaxing 🧘 (${travelPace}`;
-            case travelPace < 40 :
-                return `Easygoing 🌤 (${travelPace}`;
-            case travelPace < 60 :
-                return `Balanced 🚶‍♂️ (${travelPace}`;
-            case travelPace < 75 :
-                return `Dynamic 🧭 (${travelPace}`;
-            case travelPace < 90:
-                return `Adventurous 🚴‍♂️ (${travelPace} `;
-            default:
-                return `Travel hustler 🎢 (${travelPace}`;
-        }
 
-    }
     return (<div className="form-container">
         <div className="section-title">Where are you traveling from?</div>
         <div className="section-subtitle">
@@ -60,7 +44,7 @@ export default function Step1({homeLocation, setHomeLocation, travelPace, setTra
                 <div className="input-group-btn">
                     <span>Relaxing</span>
                     <div className="budget-display">
-                        <div>{getLabel(Number(travelPace))} Pace)</div>
+                        <div>{getLabel(Number(travelPace))} ({travelPace} Pace)</div>
                     </div>
                     <span>Extreme</span>
                 </div>

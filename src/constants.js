@@ -191,23 +191,24 @@ export const travelGroups = [
     {id: "Family", icon: "👨‍👩‍👧‍👦", title: "Family"},
     {id: "Friends", icon: "👥", title: "Friends"},
 ]
-export const travelStyles = [
+
+export const properties = [
     {
-        id: "Relaxer",
-        icon: "🏖️",
-        title: "Relaxer",
-        description: "Beaches, spas, resorts"
+        name: "Home Location",
+        image: "🏠"
     },
     {
-        id: "Explorer",
-        icon: "🏛️",
-        title: "Explorer",
-        description: "Sightseeing, culture, history"
+        name: "Travel Dates",
+        image: "📅",
+
     },
     {
-        id: "Adventurer",
-        icon: "🏔️",
-        title: "Adventurer",
-        description: "Hiking, sports, thrills"
+        name: "Budget",
+        image: "💰",
+
     },
-];
+    {
+        name: "Interests",
+        image: "❤️"
+    }
+]

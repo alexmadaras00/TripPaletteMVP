@@ -8,6 +8,7 @@ export default function Step3({
                                   tripDuration,
                                   budgetRange
                               }) {
+
     return (<div className="form-container">
         <div className="section-title">When and how much?</div>
         <div className="section-subtitle">Let us know your travel dates and budget</div>
@@ -64,14 +65,14 @@ export default function Step3({
             />
             <div
                 style={{display: "flex", justifyContent: "space-between", marginTop: "0.5rem"}}>
-                <span>Budget (${budgetRange.dailyMin}/day)</span>
+                <span>Budget (€{budgetRange.dailyMin}/day)</span>
                 <div className="budget-display">
-                    <div>${budgetValue} total</div>
+                    <div>€{budgetValue} total</div>
                     <div style={{fontSize: "0.75rem", color: "#6b7280"}}>
-                        ${Math.round(budgetValue / tripDuration)}/day
+                        €{Math.round(budgetValue / tripDuration)}/day
                     </div>
                 </div>
-                <span>Luxury (${budgetRange.dailyMax}/day)</span>
+                <span>Luxury (€{budgetRange.dailyMax}/day)</span>
             </div>
         </div>
     </div>);

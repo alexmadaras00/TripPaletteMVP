@@ -1,5 +1,5 @@
 import {useState} from "react"
-import Navigation from "../components/Navigation.jsx";
+import NavBar from "./NavBar.jsx";
 import "../styles/navbar.css"
 import "../styles/plan-trip.css"
 import {Link, useNavigate} from "react-router-dom";
@@ -14,7 +14,7 @@ import Step4 from "./steps/Step4.jsx";
 export default function PlanTrip() {
     const [currentStep, setCurrentStep] = useState(1);
     const [travelPace, setTravelPace] = useState(0);
-    const [budgetValue, setBudgetValue] = useState(3100);
+    const [budget, setBudget] = useState(3100);
     const [selectedTravelGroup, setSelectedTravelGroup] = useState("Couple");
     const [selectedInterests, setSelectedInterests] = useState([]);
     const [startDate, setStartDate] = useState("");
@@ -23,6 +23,23 @@ export default function PlanTrip() {
     const [homeLocation, setHomeLocation] = useState("");
 
     // eslint-disable-next-line no-undef
+
+    const getLabel = (travelPace) => {
+        switch (true) {
+            case travelPace < 20:
+                return `Relaxing 🧘`;
+            case travelPace < 40 :
+                return `Easygoing 🌤`;
+            case travelPace < 60 :
+                return `Balanced 🚶‍♂️`;
+            case travelPace < 75 :
+                return `Dynamic 🧭`;
+            case travelPace < 90:
+                return `Adventurous 🚴‍♂️`;
+            default:
+                return `Travel hustler 🎢`;
+        }
+    }
 
 
     // Add this function at the top of the component, after the state declarations
@@ -50,6 +67,11 @@ export default function PlanTrip() {
         }
     }
 
+    const formatDateDisplay = (dateStr) => {
+        const [year, month, day] = dateStr.split("-");
+        return `${day}/${month}/${year}`;
+    };
+
     const tripDuration = calculateTripDuration();
     const budgetRange = getDynamicBudgetRange();
 
@@ -59,7 +81,7 @@ export default function PlanTrip() {
     return (
         <div>
 
-            <Navigation/>
+            <NavBar/>
             <div className="page-container">
                 <div className="page-content">
                     <div className="page-header">
@@ -80,7 +102,7 @@ export default function PlanTrip() {
                     <div className="page-section">
                         {currentStep === 1 && (
                             <Step1 homeLocation={homeLocation} setHomeLocation={setHomeLocation}
-                                  travelPace={travelPace} setTravelPace={setTravelPace}/>
+                                  travelPace={travelPace} setTravelPace={setTravelPace} getLabel = {getLabel}/>
                         )}
 
                         {currentStep === 2 && (
@@ -90,7 +112,7 @@ export default function PlanTrip() {
                         )}
 
                         {currentStep === 3 && (
-                            <Step3 budgetValue={budgetValue} setBudgetValue={setBudgetValue} budgetRange={budgetRange}
+                            <Step3 budgetValue={budget} setBudgetValue={setBudget} budgetRange={budgetRange}
                                    startDate={startDate} setStartDate={setStartDate} endDate={endDate}
                                    setEndDate={setEndDate} tripDuration={tripDuration}/>
                         )}
@@ -99,7 +121,7 @@ export default function PlanTrip() {
                             <Step4 selectedInterests={selectedInterests} setSelectedInterests={setSelectedInterests}/>
                         )}
 
-                        {/* Navigation Buttons */}
+                        {/* NavBar Buttons */}
                         <div style={{display: "flex", justifyContent: "space-between", marginTop: "2rem"}}>
                             <button
                                 className="btn btn-secondary"
@@ -108,7 +130,6 @@ export default function PlanTrip() {
                             >
                                 Back
                             </button>
-
                             <button
                                 className="btn btn-primary"
                                 onClick={() => {
@@ -116,10 +137,11 @@ export default function PlanTrip() {
                                         // Save user preferences to localStorage
                                         const userPreferences = {
                                             homeLocation: homeLocation,
-                                            travelPace: travelPace,
-                                            startDate: startDate,
-                                            endDate: endDate,
-                                            budgetValue: budgetValue,
+                                            travelPace: getLabel(travelPace),
+                                            startDate: formatDateDisplay(startDate),
+                                            endDate: formatDateDisplay(endDate),
+                                            numberOfDays: calculateTripDuration(),
+                                            budget: `€ ${budget}`,
                                             travelGroup: selectedTravelGroup,
                                             adults: 2, // You can make this dynamic
                                             children: 0,

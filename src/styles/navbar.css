@@ -36,7 +36,7 @@ nav {
     align-items: center;
     justify-self: stretch;
     gap: 5vh;
-    margin: 0;
+    margin-right: 1rem;
 }
 
 .list1 li a {
