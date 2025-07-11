@@ -1,5 +1,3 @@
-
-
 import {useState} from "react"
 import Navigation from "../components/Navigation.jsx";
 import "../styles/navbar.css"
@@ -15,7 +13,7 @@ import Step4 from "./steps/Step4.jsx";
 
 export default function PlanTrip() {
     const [currentStep, setCurrentStep] = useState(1);
-    const [selectedTravelStyle, setSelectedTravelStyle] = useState("Explorer");
+    const [travelPace, setTravelPace] = useState(0);
     const [budgetValue, setBudgetValue] = useState(3100);
     const [selectedTravelGroup, setSelectedTravelGroup] = useState("Couple");
     const [selectedInterests, setSelectedInterests] = useState([]);
@@ -25,7 +23,6 @@ export default function PlanTrip() {
     const [homeLocation, setHomeLocation] = useState("");
 
     // eslint-disable-next-line no-undef
-
 
 
     // Add this function at the top of the component, after the state declarations
@@ -59,7 +56,6 @@ export default function PlanTrip() {
     const navigate = useNavigate();
 
 
-
     return (
         <div>
 
@@ -75,7 +71,7 @@ export default function PlanTrip() {
                     <div className="page-section">
                         <div className="grid-4">
                             {steps.map((step) => (
-                              <StepCard currentStep={currentStep} key={step.id} step={step} />
+                                <StepCard currentStep={currentStep} key={step.id} step={step}/>
                             ))}
                         </div>
                     </div>
@@ -83,19 +79,24 @@ export default function PlanTrip() {
                     {/* Current Step Content */}
                     <div className="page-section">
                         {currentStep === 1 && (
-                          <Step1 homeLocation={homeLocation} setHomeLocation={setHomeLocation} selectedTravelStyle={selectedTravelStyle} setSelectedTravelStyle={setSelectedTravelStyle} />
+                            <Step1 homeLocation={homeLocation} setHomeLocation={setHomeLocation}
+                                  travelPace={travelPace} setTravelPace={setTravelPace}/>
                         )}
 
                         {currentStep === 2 && (
-                            <Step2 budgetValue={budgetValue} setBudgetValue={setBudgetValue} budgetRange={budgetRange} startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} tripDuration={tripDuration} />
+                            <Step2
+                                selectedTravelGroup={selectedTravelGroup}
+                                setSelectedTravelGroup={setSelectedTravelGroup}/>
                         )}
 
                         {currentStep === 3 && (
-                            <Step3 selectedTravelGroup={selectedTravelGroup} setSelectedTravelGroup={setSelectedTravelGroup} />
+                            <Step3 budgetValue={budgetValue} setBudgetValue={setBudgetValue} budgetRange={budgetRange}
+                                   startDate={startDate} setStartDate={setStartDate} endDate={endDate}
+                                   setEndDate={setEndDate} tripDuration={tripDuration}/>
                         )}
 
                         {currentStep === 4 && (
-                            <Step4 selectedInterests={selectedInterests} setSelectedInterests={setSelectedInterests} />
+                            <Step4 selectedInterests={selectedInterests} setSelectedInterests={setSelectedInterests}/>
                         )}
 
                         {/* Navigation Buttons */}
@@ -115,7 +116,7 @@ export default function PlanTrip() {
                                         // Save user preferences to localStorage
                                         const userPreferences = {
                                             homeLocation: homeLocation,
-                                            travelStyle: selectedTravelStyle,
+                                            travelPace: travelPace,
                                             startDate: startDate,
                                             endDate: endDate,
                                             budgetValue: budgetValue,

@@ -27,14 +27,14 @@ function Navigation() {
                 <li><a href="/plan">Plan a trip</a></li>
                 <li><a href="/profile">My Profile</a></li>
             </ul>
-            <ul className="list2">
-                {/*<li><Search/></li>*/}
-                <li className="profile"> {user ? (
-                    <img className="logout-image" src={logout} onClick={() => auth.signOut()} alt="logout"/>
-                ) : (
-                    <a href="/login"><Profile className="profile-icon"/></a>
-                )}</li>
-            </ul>
+            {/*<ul className="list2">*/}
+            {/*    /!*<li><Search/></li>*!/*/}
+            {/*    <li className="profile"> {user ? (*/}
+            {/*        <img className="logout-image" src={logout} onClick={() => auth.signOut()} alt="logout"/>*/}
+            {/*    ) : (*/}
+            {/*        <a href="/login"><Profile className="profile-icon"/></a>*/}
+            {/*    )}</li>*/}
+            {/*</ul>*/}
         </nav>
     );
 }

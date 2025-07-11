@@ -29,7 +29,7 @@ export default function HomePage() {
                         <path d="m12 5 7 7-7 7"></path>
                     </svg>
                 </Link>
-                <Link to="/explore" className="landing-button-secondary">
+                <Link to="/form" className="landing-button-secondary">
                     Explore Destinations
                 </Link>
             </div>

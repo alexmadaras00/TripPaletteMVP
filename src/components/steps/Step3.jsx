@@ -1,63 +1,77 @@
-import {travelGroups} from "../../constants.js";
-
-export default function Step3({selectedTravelGroup, setSelectedTravelGroup}) {
-
-    const optionsAdults = () => {
-        if (selectedTravelGroup === "Solo") {
-            return [<option key="1">1</option>];
-        }
-        if (selectedTravelGroup === "Couple") {
-            return [<option key="2">2</option>];
-        }
-        const options = [];
-        options.push(<option key="2">2</option>);
-        options.push(<option key="3">3</option>);
-        options.push(<option key="4">4+</option>);
-        return options;
-    };
-    const optionsChildren = () => {
-        const options = [<option key="0">0</option>];
-        if (selectedTravelGroup !== "Solo" && selectedTravelGroup !== "Couple") {
-            options.push(<option key="1">1</option>);
-            options.push(<option key="2">2</option>);
-            options.push(<option key="3">3+</option>);
-        }
-        return options;
-    }
+export default function Step3({
+                                  budgetValue,
+                                  setBudgetValue,
+                                  startDate,
+                                  setStartDate,
+                                  endDate,
+                                  setEndDate,
+                                  tripDuration,
+                                  budgetRange
+                              }) {
     return (<div className="form-container">
-        <div className="section-title">Who's traveling?</div>
-        <div className="section-subtitle">Tell us about your travel group</div>
+        <div className="section-title">When and how much?</div>
+        <div className="section-subtitle">Let us know your travel dates and budget</div>
 
-        <div className="section-title" style={{fontSize: "1rem", marginBottom: "1rem"}}>
-            Travel Group
-        </div>
-        <div className="grid-4">
-            {travelGroups.map((group) => (
-                <div
-                    key={group.id}
-                    className={`card ${selectedTravelGroup === group.id ? "selected" : ""}`}
-                    onClick={() => setSelectedTravelGroup(group.id)}
-                >
-                    <div className="card-content" style={{textAlign: "center"}}>
-                        <div style={{fontSize: "2rem", marginBottom: "1rem"}}>{group.icon}</div>
-                        <div className="card-title">{group.title}</div>
-                    </div>
-                </div>
-            ))}
-        </div>
-
-        <div className="form-grid" style={{marginTop: "2rem"}}>
+        <div className="form-grid">
             <div className="input-group">
-                <label className="input-label">Adults</label>
-                <select className="input-field select-field">
-                    {optionsAdults()}
-                </select>
+                <label className="input-label">Start Date</label>
+                <input
+                    type="date"
+                    className="input-field"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    min={new Date().toISOString().split("T")[0]} // Prevent past dates
+                />
             </div>
             <div className="input-group">
-                <label className="input-label">Children</label>
-                <select className="input-field select-field">
-                    {optionsChildren()}
-                </select>
+                <label className="input-label">End Date</label>
+                <input
+                    type="date"
+                    className="input-field"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    min={startDate || new Date().toISOString().split("T")[0]} // End date must be after start date
+                />
+            </div>
+        </div>
+
+        {/* Add validation message */}
+        {endDate && startDate && new Date(endDate) <= new Date(startDate) && (
+            <div
+                style={{
+                    color: "#ef4444",
+                    fontSize: "0.875rem",
+                    marginTop: "0.5rem",
+                    textAlign: "center",
+                }}
+            >
+                End date must be after start date
+            </div>
+        )}
+
+        <div className="input-group">
+            <label className="input-label">
+                Budget (per person) - {tripDuration} {tripDuration === 1 ? "day" : "days"}
+            </label>
+            <input
+                type="range"
+                min={budgetRange.min}
+                max={budgetRange.max}
+                value={budgetValue}
+                onChange={(e) => setBudgetValue(Number.parseInt(e.target.value))}
+                className="input-field"
+                style={{height: "2rem"}}
+            />
+            <div
+                style={{display: "flex", justifyContent: "space-between", marginTop: "0.5rem"}}>
+                <span>Budget (${budgetRange.dailyMin}/day)</span>
+                <div className="budget-display">
+                    <div>${budgetValue} total</div>
+                    <div style={{fontSize: "0.75rem", color: "#6b7280"}}>
+                        ${Math.round(budgetValue / tripDuration)}/day
+                    </div>
+                </div>
+                <span>Luxury (${budgetRange.dailyMax}/day)</span>
             </div>
         </div>
     </div>);
