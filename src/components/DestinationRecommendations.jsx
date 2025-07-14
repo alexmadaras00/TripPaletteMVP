@@ -1,18 +1,20 @@
-import {useLocation} from "react-router-dom";
-import {ErrorBoundary} from "next/dist/client/components/error-boundary.js";
 import NavBar from "./NavBar.jsx";
 import '../styles/destination-recommender.css';
 
 import InputCard from "./InputCard.jsx";
-import {properties} from "../constants.js";
+import {properties} from "./constants/constants.js";
 import PlaceCard from "./PlaceCard.jsx";
+import {useState} from "react";
+
 
 export default function DestinationRecommendations() {
-    const location = useLocation();
-    const preferences = location.state.preferences;
 
-    const style = preferences.travelPace
-
+    const preferencesItem = sessionStorage.getItem("tripPreferences");
+    const preferences = preferencesItem ? JSON.parse(preferencesItem) : null;
+    const [selectedKey,setSelectedKey] = useState(0);
+    console.log(preferences);
+    const style = preferences.travelPace;
+    console.log(`Numer of days: ${preferences.numberOfDays}`);
     const wordsToCammelCase = (str) => {
         return str
             .toLowerCase()
@@ -34,7 +36,7 @@ export default function DestinationRecommendations() {
         rating: 4.8,
         reviews: 2847,
         matchScore: 95,
-        travelTime: "7-9 hours from most locations",
+        flightTime: "7-9 hours from most locations",
         highlights: [
             "Louvre & Musée d'Orsay priority access",
             "Seine river dinner cruise",
@@ -47,7 +49,7 @@ export default function DestinationRecommendations() {
         climate: "Mild summer, perfect for walking tours",
         currency: "Euro (EUR)",
         language: "French (English widely spoken in tourist areas)",
-        image: "/placeholder.svg?height=200&width=300",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg/1280px-La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg",
         flag: "🇫🇷",
     },
         {
@@ -202,8 +204,9 @@ export default function DestinationRecommendations() {
                     <h1 className="dest-title">Reccommended Destinations (Top 5)</h1>
                     <p>Each destination is carefully selected to match your {style} style and interests</p>
                     <div className="dest-list-container">
-                        {destinations.map((place,id) => (
-                            <PlaceCard place={place} key={id}/>
+                        {destinations.map((place, id) => (
+
+                            <PlaceCard place={place} key={id} id={id} selectedKey={selectedKey} setSelectedKey = {setSelectedKey} />
                         ))}
                     </div>
                 </div>

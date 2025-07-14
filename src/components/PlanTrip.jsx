@@ -4,7 +4,7 @@ import "../styles/navbar.css"
 import "../styles/plan-trip.css"
 import {Link, useNavigate} from "react-router-dom";
 import Autocomplete from "react-google-autocomplete";
-import {steps} from "../constants.js";
+import {steps} from "./constants/constants.js";
 import StepCard from "./steps/StepCard.jsx";
 import Step1 from "./steps/Step1.jsx";
 import Step2 from "./steps/Step2.jsx";
@@ -135,19 +135,20 @@ export default function PlanTrip() {
                                 onClick={() => {
                                     if (currentStep === 4) {
                                         // Save user preferences to localStorage
-                                        const userPreferences = {
+                                        const tripPreferences = {
                                             homeLocation: homeLocation,
                                             travelPace: getLabel(travelPace),
                                             startDate: formatDateDisplay(startDate),
                                             endDate: formatDateDisplay(endDate),
                                             numberOfDays: calculateTripDuration(),
-                                            budget: `€ ${budget}`,
+                                            budget: budget,
                                             travelGroup: selectedTravelGroup,
                                             adults: 2, // You can make this dynamic
                                             children: 0,
                                             interests: selectedInterests,
                                         }
-                                        navigate("/destination-recommendations", {state: {preferences: userPreferences}})
+                                        navigate("/destination-recommendations")
+                                        sessionStorage.setItem("tripPreferences",JSON.stringify(tripPreferences));
 
                                     } else {
                                         setCurrentStep(Math.min(4, currentStep + 1))
