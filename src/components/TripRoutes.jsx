@@ -10,39 +10,17 @@ export default function TripRoutes() {
     const preferences = preferencesItem ? JSON.parse(preferencesItem) : null;
     const [selectedRoute, setSelectedRoute] = useState(0);
     console.log(preferences);
-    const style = preferences.travelPace;
     console.log(`Numer of days: ${preferences.numberOfDays}`);
     console.log(`Selected destination: ${preferences.destination}`);
     const navigate = useNavigate();
-    const wordsToCammelCase = (str) => {
-        return str
-            .toLowerCase()
-            .replace(/(?:^\w|[\s-_]\w)/g, (match, index) =>
-                index === 0 ? match.toLowerCase() : match.trim().toUpperCase()
-            );
 
-    };
-    const displayValueProps = (prop) => {
-
-        if (prop === "Travel Dates") {
-            return `From ${preferences["startDate"]} to ${preferences["endDate"]}`;
-        }
-        let value = preferences[wordsToCammelCase(prop)];
-
-        if (Array.isArray(value)) {
-            return value.join(", ");
-        }
-
-        return value;
-    }
 
     function navigateBack() {
         navigate("/destination-recommendations");
     }
 
     const getTransportationRoutes = () => {
-        const { homeLocation } = preferences.homeLocation;
-        const { city, country } = preferences.destination;
+
         const basePrice = preferences.destination.price || preferences.budget
 
         // Realistic routes from Enschede to Paris
