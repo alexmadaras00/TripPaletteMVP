@@ -99,7 +99,7 @@
 }
 
 .card-content {
-    padding: 1.5rem;
+    padding: 1rem;
 }
 
 .card-title {
@@ -194,10 +194,14 @@
     background-color: white;
     color: #374151;
     border: 1px solid #d1d5db;
+    white-space: nowrap;
+    margin-left: auto;
 }
 
 .btn-secondary:hover {
     background-color: #f9fafb;
+    white-space: nowrap;
+    margin-left: auto;
 }
 
 /* Stats and metrics */
@@ -266,3 +270,4 @@
     justify-content: space-between;
 
 }
+

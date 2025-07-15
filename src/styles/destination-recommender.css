@@ -15,7 +15,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
 }
 
 .dest-container {
@@ -109,9 +108,9 @@
 }
 
 .text-match {
-    color: #e05a2b;
-    font-size: 1.5rem;
-
+    color: #ff6b35;
+    font-size: 1.25rem;
+    font-weight: 600;
 }
 
 .card-details {
@@ -147,7 +146,8 @@
 }
 
 .text-prop {
-    color: #6b7280;
+
+    color: #2c3e50;
     font-size: 0.875rem;
     margin-bottom: 0.5rem;
     margin-top: 0.2rem;
@@ -183,9 +183,11 @@
 }
 
 .text-val {
-    color: #2c3e50;
+
     font-size: 0.875rem;
     margin-bottom: 0.2rem;
+    font-weight: 600;
+    color: #6b7280;
 }
 
 .image-place {
@@ -215,3 +217,4 @@
     color: #ff6b35;
     font-size: 0.875rem;
 }
+

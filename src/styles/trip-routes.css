@@ -1,0 +1,336 @@
+.header-container{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 2rem;
+    padding: 2rem 4rem;
+    align-items: center;
+    min-width: 80vw;
+    text-align: start;
+    border-radius: 2rem;
+    background-color: #ffff;
+}
+.routes-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+    padding: 2rem 2rem;
+    min-width: 80vw;
+    border-radius: 2rem;
+    background-color: #ffff;
+    color: #ffff;
+}
+.routes-inner-container {
+    border-radius: 0.75rem;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+    cursor: pointer;
+}
+.routes-inner-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.upper-card {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    justify-content: space-between;
+
+}
+
+.source-dest {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+.button-change-dest {
+    border: #1a1a1a solid 0.01rem;
+    background-color: white;
+}
+.button-change-dest:hover {
+    border: #1a1a1a solid 0.01rem;
+    background-color: #ff6b35;
+}
+
+
+.departure-dest {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrow {
+    width: 1rem;
+    height: 1rem;
+    color: #2c3e50;
+    font-size: 1.5rem;
+    margin-bottom: 0.2rem;
+    justify-self: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.lower-card {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+.card-route{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    padding: 0.5rem;
+}
+.card-route:hover {
+    transform: scale(1.01);
+}
+.card-route-selected{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    padding: 0.5rem;
+    border: #ff6b35 0.15rem solid;
+}
+.route-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    min-height: 400px;
+}
+
+.routes-list-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+    width: 100%;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-left {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+.route-title{
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+}
+
+.route-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.metric-section {
+    display: flex;
+    gap: 1rem;
+}
+
+.metric {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.metric-value {
+    color: #1a1a1a;
+    font-weight: 500;
+}
+
+.metric-label {
+    font-size: 0.875rem;
+    color: #6b7280; /* Gray-500 */
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem;
+}
+
+.info-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.info-item {
+    font-size: 0.875rem;
+    color: #374151; /* Gray-700 */
+}
+
+.booking-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+}
+
+.booking-link-card{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background-color: white;
+    border-radius: 0.375rem;
+    border: 1px solid #e5e7eb;
+    text-decoration: none;
+    color: #374151;
+    font-size: 0.75rem;
+    transition: all 0.2s ease;
+}
+
+.booking-box {
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8fafc;
+    border-radius: 1rem;
+}
+
+.link-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    padding: 0.1rem;
+    background-color: #ff6b35;
+    flex-shrink: 0;
+}
+
+.link-container {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    padding: 0.2rem 0.5rem;
+}
+.link-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #111827;
+}
+.link-description {
+    font-size: 0.625rem;
+    color: #6b7280;
+}
+.booking-note {
+    display: flex;
+    margin-top: 1rem;
+    color: #6b7280;
+    font-size: 0.875rem;
+    background-color: #f8fafc;
+    border-radius: 1rem;
+    font-style: italic;
+    align-content: center;
+    padding: 0.7rem 0.5rem;
+
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background-color: #f9fafb;
+    border-top: 1px solid #e5e7eb;
+}
+
+.selected-indicator {
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+    color: #ff6b35;
+    font-weight: 600;
+    background-color: #FF6B3519;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid #FF6B3533;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+.indicator-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #ff6b35;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.map-section {
+    margin-top: 1rem;
+    width: 100%;
+    height: 250px;
+}
+
+.map-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 0 0 1rem 1rem;
+}
+
+.route-subtitle {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.route-price {
+    text-align: right;
+    font-size:2rem;
+    font-weight: 800;
+    color: #ff6b35;
+    line-height: 1;
+}
+
+.metrics-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background-color: #f8fafc;
+    border-radius: 0.75rem;
+}
+
+.timeline-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #ff6b35;
+    margin-bottom: 1rem;
+}
+
+.timeline-placeholder {
+    position: relative;
+    margin-bottom:1.5rem;
+    padding-bottom: 1rem;
+}
+

@@ -23,6 +23,19 @@ export default function DestinationRecommendations() {
             );
 
     };
+    const displayValueProps = (prop) => {
+
+        if (prop === "Travel Dates") {
+            return `From ${preferences["startDate"]} to ${preferences["endDate"]}`;
+        }
+        let value = preferences[wordsToCammelCase(prop)];
+
+        if (Array.isArray(value)) {
+            return value.join(", ");
+        }
+
+        return value;
+    }
 
     const destinations = [{
         id: 1,
@@ -165,19 +178,7 @@ export default function DestinationRecommendations() {
             flag: "🇬🇷",
         }];
     console.log(preferences);
-    const displayValueProps = (prop) => {
 
-        if (prop === "Travel Dates") {
-            return `From ${preferences["startDate"]} to ${preferences["endDate"]}`;
-        }
-        let value = preferences[wordsToCammelCase(prop)];
-
-        if (Array.isArray(value)) {
-            return value.join(", ");
-        }
-
-        return value;
-    }
 
 
     return (
@@ -205,8 +206,7 @@ export default function DestinationRecommendations() {
                     <p>Each destination is carefully selected to match your {style} style and interests</p>
                     <div className="dest-list-container">
                         {destinations.map((place, id) => (
-
-                            <PlaceCard place={place} key={id} id={id} selectedKey={selectedKey} setSelectedKey = {setSelectedKey} />
+                            <PlaceCard place={place} key={id} id={id} selectedKey={selectedKey} setSelectedKey = {setSelectedKey} preferences = {preferences} />
                         ))}
                     </div>
                 </div>
