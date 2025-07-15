@@ -1,4 +1,4 @@
-.header-container{
+.header-container {
     display: flex;
     flex-direction: column;
     position: relative;
@@ -10,6 +10,7 @@
     border-radius: 2rem;
     background-color: #ffff;
 }
+
 .routes-container {
     display: flex;
     flex-direction: column;
@@ -20,6 +21,7 @@
     background-color: #ffff;
     color: #ffff;
 }
+
 .routes-inner-container {
     border-radius: 0.75rem;
     padding: 1rem;
@@ -28,10 +30,12 @@
     border: 2px solid transparent;
     cursor: pointer;
 }
+
 .routes-inner-container:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
+
 .upper-card {
     width: 100%;
     display: flex;
@@ -52,6 +56,7 @@
     border: #1a1a1a solid 0.01rem;
     background-color: white;
 }
+
 .button-change-dest:hover {
     border: #1a1a1a solid 0.01rem;
     background-color: #ff6b35;
@@ -82,26 +87,34 @@
     flex-direction: row;
     gap: 1rem;
 }
-.card-route{
+
+.card-route {
     display: flex;
     flex-direction: column;
     width: 100%;
     border-radius: 1rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    padding: 0.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.5rem;
 }
+
 .card-route:hover {
     transform: scale(1.01);
 }
-.card-route-selected{
+
+.card-route-selected {
     display: flex;
     flex-direction: column;
     width: 100%;
     border-radius: 1rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    padding: 0.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border: #ff6b35 0.15rem solid;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.5rem;
 }
+
 .route-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -132,7 +145,8 @@
     align-items: flex-start;
     margin-bottom: 1.5rem;
 }
-.route-title{
+
+.route-title {
     font-size: 1.25rem;
     font-weight: 700;
     color: #111827;
@@ -193,7 +207,7 @@
     gap: 0.5rem;
 }
 
-.booking-link-card{
+.booking-link-card {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -223,6 +237,7 @@
     padding: 0.1rem;
     background-color: #ff6b35;
     flex-shrink: 0;
+    align-content: center;
 }
 
 .link-container {
@@ -231,15 +246,18 @@
     align-content: center;
     padding: 0.2rem 0.5rem;
 }
+
 .link-name {
     font-size: 0.875rem;
     font-weight: 600;
     color: #111827;
 }
+
 .link-description {
     font-size: 0.625rem;
     color: #6b7280;
 }
+
 .booking-note {
     display: flex;
     margin-top: 1rem;
@@ -275,6 +293,7 @@
     gap: 0.5rem;
     margin-top: 0.5rem;
 }
+
 .indicator-dot {
     width: 16px;
     height: 16px;
@@ -305,7 +324,7 @@
 
 .route-price {
     text-align: right;
-    font-size:2rem;
+    font-size: 2rem;
     font-weight: 800;
     color: #ff6b35;
     line-height: 1;
@@ -330,7 +349,84 @@
 
 .timeline-placeholder {
     position: relative;
-    margin-bottom:1.5rem;
+    margin-bottom: 1.5rem;
     padding-bottom: 1rem;
 }
+.card-station {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
 
+.station-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-left: 2rem;
+}
+.connection-line{
+    position: relative;
+    left: -5px;
+    top: 4px;
+    bottom: 0px;
+    width: 2px;
+    background-color: #e5e7eb;
+    z-index: 0;
+}
+.station-dot {
+    display: flex;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    padding: 0.1rem;
+    background-color: #ff6b35;
+    flex-shrink: 0;
+    align-content: flex-start;
+    justify-content: flex-start;
+    z-index: 5;
+}
+
+.details-station {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0.8rem;
+}
+
+.text-station {
+    display: flex;
+    flex-direction: row;
+    color: #2c3e50;
+    font-size: 0.875rem;
+
+    font-weight: 600;
+}
+
+.link-station {
+    text-decoration: underline;
+    color: #ff6b35;
+    font-size: 0.875rem;
+    margin-bottom: 0.8rem;
+}
+
+.duration-station {
+    font-size: 0.875rem;
+    color: #6b7280;
+    text-decoration: none;
+}
+
+.map-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.map-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #e5e7eb;
+    height: 92%;
+    width: 100%;
+    padding-bottom: 2rem;
+
+}

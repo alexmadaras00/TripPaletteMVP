@@ -9,11 +9,11 @@ export default function TripRoutes() {
     const preferencesItem = sessionStorage.getItem("tripPreferences");
     const preferences = preferencesItem ? JSON.parse(preferencesItem) : null;
     const [selectedRoute, setSelectedRoute] = useState(0);
-    console.log(preferences);
     console.log(`Numer of days: ${preferences.numberOfDays}`);
     console.log(`Selected destination: ${preferences.destination}`);
     const navigate = useNavigate();
-
+    const homeLocation = preferences.homeLocation;
+    const destination = preferences.destination;
 
     function navigateBack() {
         navigate("/destination-recommendations");
@@ -310,7 +310,7 @@ export default function TripRoutes() {
                 <p>Choose the best way to travel from {preferences.homeLocation} to {preferences.destination}</p>
                 <div className="routes-list-container">
                     {routes.map((route, id) => (
-                        <RouteCard route={route} key={id} id={id} selectedRoute={selectedRoute} setSelectedRoute = {setSelectedRoute} preferences = {preferences} />
+                        <RouteCard route={route} key={id} id={id} selectedRoute={selectedRoute} setSelectedRoute = {setSelectedRoute} homeLocation = {homeLocation} destination = {destination} />
                     ))}
                 </div>
             </div>

@@ -1,8 +1,8 @@
 import BookingLink from "./BookingLink.jsx";
 import StationCard from "./StationCard.jsx";
 
-export default function RouteCard({route, selectedRoute, setSelectedRoute, id}) {
-
+export default function RouteCard({route, selectedRoute, setSelectedRoute, id, homeLocation, destination}) {
+    console.log("start: ", homeLocation)
     const getRouteIcon = (type) => {
         const icons = {
             flight: "✈️",
@@ -12,6 +12,30 @@ export default function RouteCard({route, selectedRoute, setSelectedRoute, id}) 
         };
         return icons[type] || "✈️";
     };
+    const getMode = (type) => {
+        switch (type) {
+            case "car":
+                return "driving";
+            case "train":
+            case "bus":
+                return "transit";
+            case "bike":
+                return "bicycling";
+            case "walk":
+                return "walking";
+            default:
+                return null;
+        }
+    };
+    const itinerary = route.itinerary;
+
+// Extract all intermediate waypoints (exclude first and last)
+    const waypoints = itinerary
+        .slice(1, -1) // everything except first and last
+        .map(stop => stop.location)
+        .join("|");
+    const getFlightLink = (origin, destination) =>
+        `https://www.google.com/flights?hl=en#flt=${origin}.${destination}`;
 
     return (
         <div
@@ -58,8 +82,8 @@ export default function RouteCard({route, selectedRoute, setSelectedRoute, id}) 
                             <div className="timeline-title">Journey Timeline</div>
                             <div className="timeline-placeholder">
                                 {
-                                    route.itinerary.map((station,id)=>(
-                                       <StationCard key={id} station={station} id={id} />
+                                    route.itinerary.map((station, id) => (
+                                        <StationCard key={id} station={station} itinerary={route.itinerary} id={id}/>
                                     ))
                                 }
                             </div>
@@ -68,7 +92,7 @@ export default function RouteCard({route, selectedRoute, setSelectedRoute, id}) 
                                 <div className="text-prop">🔗 Book Your Journey</div>
                                 <div className="booking-links">
                                     {route.bookingLinks.map((bookingLink, index) => (
-                                       <BookingLink key={index} bookingLink={bookingLink} />
+                                        <BookingLink key={index} bookingLink={bookingLink}/>
                                     ))}
                                 </div>
                             </div>
@@ -92,24 +116,36 @@ export default function RouteCard({route, selectedRoute, setSelectedRoute, id}) 
 
                     <div className="card-right">
                         <div className="map-header">
-                            <div className="map-title">🗺️ Route Map</div>
-                            <div className="map-subtitle">
+                            <h3 className="route-title">🗺️ Route Map</h3>
+                            <p className="route-subtitle">
                                 {route.distance} • {route.duration}
-                            </div>
+                            </p>
                         </div>
 
-                        <div className="map-container">
+                        {route.type === "flight" ? (
+                            <div className="map-unavailable">
+                                <p>🛫 Flight map not available. </p>
+                                <a
+                                    href={getFlightLink(homeLocation, destination)}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flight-link"
+                                >
+                                    View on Google Flights
+                                </a>
+                            </div>
+                        ) : (
                             <iframe
-                                src={`https://www.google.com/maps/embed/v1/directions?key=YOUR_API_KEY&origin=Enschede,Netherlands&destination=Paris,France&mode=${route.type === "car" ? "driving" : route.type === "train" ? "transit" : route.type === "bus" ? "transit" : "flying"}&waypoints=${route.type === "train" ? "Amsterdam,Netherlands|Brussels,Belgium" : route.type === "bus" ? "Amsterdam,Netherlands|Brussels,Belgium" : route.type === "car" ? "Brussels,Belgium" : "Amsterdam,Netherlands"}`}
+                                src={`https://www.google.com/maps/embed/v1/directions?key=${import.meta.env.VITE_GOOGLE_MAPS_KEY}&origin=${homeLocation}&destination=${destination}&mode=${getMode(route.type)}&waypoints=${waypoints}`}
                                 width="100%"
-                                height="100%"
+                                height="92%"
                                 style={{border: 0, minHeight: "200px"}}
                                 allowFullScreen=""
                                 loading="lazy"
                                 referrerPolicy="no-referrer-when-downgrade"
                                 title={`Route map for ${route.title}`}
                             />
-                        </div>
+                        )}
                     </div>
                 </div>
             </div>
