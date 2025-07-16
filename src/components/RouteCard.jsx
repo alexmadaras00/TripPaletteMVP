@@ -148,7 +148,7 @@ export default function RouteCard({route, selectedRoute, setSelectedRoute, id, h
                         )}
                         <div className="button-container">
                             <button className="btn btn-primary"
-                                    onClick={() => (window.location.href = "/trip-schedule")}>
+                                    onClick={() => (window.location.href = "/schedule")}>
                                 View Complete Trip Schedule →
                             </button>
                         </div>

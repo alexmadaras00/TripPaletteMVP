@@ -11,6 +11,7 @@ import PlanTrip from "./components/PlanTrip.jsx";
 import DestinationRecommendations from "./components/DestinationRecommendations.jsx";
 import GoogleForm from "./components/GoogleForm.jsx";
 import TripRoutes from "./components/TripRoutes.jsx";
+import ScheduleActivities from "./components/ScheduleActivities.jsx";
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
                 <Route path="/destination-recommendations" element={<DestinationRecommendations />}/>
                 <Route path="/form" element={<GoogleForm />}/>
                 <Route path="/trip-routes" element={<TripRoutes />}/>
+                <Route path="/schedule" element={<ScheduleActivities />}/>
             </Routes>
         </BrowserRouter>);
 
