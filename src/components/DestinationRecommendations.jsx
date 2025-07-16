@@ -206,7 +206,7 @@ export default function DestinationRecommendations() {
                     <p>Each destination is carefully selected to match your {style} style and interests</p>
                     <div className="dest-list-container">
                         {destinations.map((place, id) => (
-                            <PlaceCard place={place} key={id} id={id} selectedKey={selectedKey} setSelectedKey = {setSelectedKey} preferences = {preferences} />
+                            <PlaceCard place={place} key={id} id={id} selectedPlace={selectedKey} setSelectedPlace= {setSelectedKey} preferences = {preferences} />
                         ))}
                     </div>
                 </div>

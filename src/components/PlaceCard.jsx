@@ -3,16 +3,16 @@ import {COLORS} from "./constants/colors.js";
 import {useNavigate} from "react-router-dom";
 
 
-export default function PlaceCard({place, id, selectedKey, setSelectedKey, preferences}) {
+export default function PlaceCard({place, id, selectedPlace, setSelectedPlace, preferences}) {
 
     const navigate = useNavigate();
     const navigateToRoutes = () => {
-        preferences.destination = place.city+", "+place.country;
+        preferences.destination = place;
         sessionStorage.setItem("tripPreferences",JSON.stringify(preferences));
         navigate("/trip-routes");
     }
-    return (<div className={`card-place${id === selectedKey ? "-selected" : ""}`} onClick={() => {
-        setSelectedKey(id);
+    return (<div className={`card-place${place === selectedPlace ? "-selected" : ""}`} onClick={() => {
+        setSelectedPlace(place);
     }}>
         <div className="card-upper-container">
             <div className="card-general-info">
@@ -43,7 +43,7 @@ export default function PlaceCard({place, id, selectedKey, setSelectedKey, prefe
 
             </div>
         </div>
-        <div className="bottom-container" hidden={selectedKey!== id}>
+        <div className="bottom-container" hidden={selectedPlace!== id}>
                 <div className="text-bottom">
                     <h1 className="selected-dest"><span style={{color: COLORS.primary}}>✓ </span>Selected Destination</h1>
                     <p className="text-prop">This destination matches {place.matchScore}% of your preferences</p>
