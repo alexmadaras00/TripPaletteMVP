@@ -1,8 +1,9 @@
 import {useState} from "react";
 import NavBar from "./NavBar.jsx";
 import "../styles/trip-routes.css";
+import "../styles/plan-trip.css";
 import {useNavigate} from "react-router-dom";
-import PlaceCard from "./PlaceCard.jsx";
+
 import RouteCard from "./RouteCard.jsx";
 
 export default function TripRoutes() {
@@ -42,10 +43,10 @@ export default function TripRoutes() {
                 baggage: "1 checked bag included",
                 carbonFootprint: "0.8 tons CO2",
                 bookingLinks: [
-                    { name: "NS International", url: "https://www.ns.nl/en", description: "Train to Amsterdam Schiphol" },
-                    { name: "KLM", url: "https://www.klm.com", description: "Flight Amsterdam to Paris" },
-                    { name: "Skyscanner", url: "https://www.skyscanner.com", description: "Compare flight prices" },
-                    { name: "Booking.com", url: "https://www.booking.com", description: "Airport hotels" },
+                    {name: "NS International", url: "https://www.ns.nl/en", description: "Train to Amsterdam Schiphol"},
+                    {name: "KLM", url: "https://www.klm.com", description: "Flight Amsterdam to Paris"},
+                    {name: "Skyscanner", url: "https://www.skyscanner.com", description: "Compare flight prices"},
+                    {name: "Booking.com", url: "https://www.booking.com", description: "Airport hotels"},
                 ],
                 itinerary: [
                     {
@@ -98,10 +99,14 @@ export default function TripRoutes() {
                 baggage: "No weight restrictions",
                 carbonFootprint: "0.2 tons CO2",
                 bookingLinks: [
-                    { name: "NS International", url: "https://www.nsinternational.com/en", description: "Book entire journey" },
-                    { name: "Thalys", url: "https://www.thalys.com/en", description: "High-speed train to Paris" },
-                    { name: "Trainline", url: "https://www.trainline.com", description: "Compare train prices" },
-                    { name: "Eurail", url: "https://www.eurail.com", description: "Rail pass options" },
+                    {
+                        name: "NS International",
+                        url: "https://www.nsinternational.com/en",
+                        description: "Book entire journey"
+                    },
+                    {name: "Thalys", url: "https://www.thalys.com/en", description: "High-speed train to Paris"},
+                    {name: "Trainline", url: "https://www.trainline.com", description: "Compare train prices"},
+                    {name: "Eurail", url: "https://www.eurail.com", description: "Rail pass options"},
                 ],
                 itinerary: [
                     {
@@ -160,9 +165,9 @@ export default function TripRoutes() {
                 baggage: "Unlimited luggage",
                 carbonFootprint: "0.6 tons CO2",
                 bookingLinks: [
-                    { name: "Hertz", url: "https://www.hertz.com", description: "Car rental" },
-                    { name: "Europcar", url: "https://www.europcar.com", description: "European car rental" },
-                    { name: "Sixt", url: "https://www.sixt.com", description: "Premium car rental" },
+                    {name: "Hertz", url: "https://www.hertz.com", description: "Car rental"},
+                    {name: "Europcar", url: "https://www.europcar.com", description: "European car rental"},
+                    {name: "Sixt", url: "https://www.sixt.com", description: "Premium car rental"},
                     {
                         name: "Google Maps",
                         url: "https://www.google.com/maps/dir/Enschede,Netherlands/Paris,France",
@@ -219,10 +224,10 @@ export default function TripRoutes() {
                 baggage: "2 bags included",
                 carbonFootprint: "0.15 tons CO2",
                 bookingLinks: [
-                    { name: "FlixBus", url: "https://global.flixbus.com", description: "Book bus tickets" },
-                    { name: "Eurolines", url: "https://www.eurolines.com", description: "Alternative bus service" },
-                    { name: "Ouibus", url: "https://www.ouibus.com", description: "SNCF bus service" },
-                    { name: "Busbud", url: "https://www.busbud.com", description: "Compare bus prices" },
+                    {name: "FlixBus", url: "https://global.flixbus.com", description: "Book bus tickets"},
+                    {name: "Eurolines", url: "https://www.eurolines.com", description: "Alternative bus service"},
+                    {name: "Ouibus", url: "https://www.ouibus.com", description: "SNCF bus service"},
+                    {name: "Busbud", url: "https://www.busbud.com", description: "Compare bus prices"},
                 ],
                 itinerary: [
                     {
@@ -299,7 +304,7 @@ export default function TripRoutes() {
                         <button className="btn btn-secondary" onClick={navigateBack}>Change Destination</button>
                     </div>
                     <div className="lower-card">
-                        <span className="text-prop">👥 {preferences.adults+preferences.children} travelers</span>
+                        <span className="text-prop">👥 {preferences.adults + preferences.children} travelers</span>
                         <span className="text-prop">💰 Budget: €{preferences.budget}</span>
                         <span className="text-prop">🎯{preferences.travelPace} style</span>
                     </div>
@@ -310,7 +315,9 @@ export default function TripRoutes() {
                 <p>Choose the best way to travel from {preferences.homeLocation} to {preferences.destination}</p>
                 <div className="routes-list-container">
                     {routes.map((route, id) => (
-                        <RouteCard route={route} key={id} id={id} selectedRoute={selectedRoute} setSelectedRoute = {setSelectedRoute} homeLocation = {homeLocation} destination = {destination} />
+                        <RouteCard route={route} key={id} id={id} selectedRoute={selectedRoute}
+                                   setSelectedRoute={setSelectedRoute} homeLocation={homeLocation}
+                                   destination={destination}/>
                     ))}
                 </div>
             </div>

@@ -138,7 +138,7 @@ export default function RouteCard({route, selectedRoute, setSelectedRoute, id, h
                             <iframe
                                 src={`https://www.google.com/maps/embed/v1/directions?key=${import.meta.env.VITE_GOOGLE_MAPS_KEY}&origin=${homeLocation}&destination=${destination}&mode=${getMode(route.type)}&waypoints=${waypoints}`}
                                 width="100%"
-                                height="92%"
+                                height="80%"
                                 style={{border: 0, minHeight: "200px"}}
                                 allowFullScreen=""
                                 loading="lazy"
@@ -146,6 +146,12 @@ export default function RouteCard({route, selectedRoute, setSelectedRoute, id, h
                                 title={`Route map for ${route.title}`}
                             />
                         )}
+                        <div className="button-container">
+                            <button className="btn btn-primary"
+                                    onClick={() => (window.location.href = "/trip-schedule")}>
+                                View Complete Trip Schedule →
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

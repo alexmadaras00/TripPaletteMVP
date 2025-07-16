@@ -48,7 +48,7 @@ export default function PlaceCard({place, id, selectedKey, setSelectedKey, prefe
                     <h1 className="selected-dest"><span style={{color: COLORS.primary}}>✓ </span>Selected Destination</h1>
                     <p className="text-prop">This destination matches {place.matchScore}% of your preferences</p>
                 </div>
-                <button className="btn btn-primary" onClick={() => {navigateToRoutes()}}>Explore Routes in {place.city}</button>
+                <button className="btn btn-primary-plan" onClick={() => {navigateToRoutes()}}>Explore Routes in {place.city}</button>
         </div>
     </div>)
 }

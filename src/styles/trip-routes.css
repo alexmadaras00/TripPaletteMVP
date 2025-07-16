@@ -62,7 +62,6 @@
     background-color: #ff6b35;
 }
 
-
 .departure-dest {
     display: flex;
     flex-direction: column;
@@ -425,8 +424,31 @@
     display: flex;
     flex-direction: column;
     background-color: #e5e7eb;
-    height: 92%;
+    height: 80%;
     width: 100%;
     padding-bottom: 2rem;
 
+}
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: flex-end;
+}
+.btn-primary {
+    background-color: #ff6b35;
+    color: white;
+    margin-top: 3rem;
+    align-self: center;
+}
+
+.btn-primary:hover {
+    background-color: #e05a2b;
+}
+
+.card-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 1rem;
 }
