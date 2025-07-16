@@ -1,5 +1,3 @@
-
-
 /* Plan Trip Page Styles */
 .page-container {
     min-height: 100vh;
@@ -11,11 +9,13 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem 1rem;
+
 }
 
 .page-header {
     text-align: center;
     margin-bottom: 3rem;
+
 }
 
 .page-title {
@@ -32,13 +32,6 @@
     margin: 0 auto;
 }
 
-.page-section {
-    background: white;
-    border-radius: 1rem;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
 
 .section-title {
     font-size: 1.5rem;
@@ -70,10 +63,18 @@
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
 }
-
 .grid-4 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.list {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
     gap: 1rem;
 }
 
@@ -99,7 +100,7 @@
 }
 
 .card-content {
-    padding: 1.5rem;
+    padding: 1rem;
 }
 
 .card-title {
@@ -117,8 +118,16 @@
 
 /* Form styles */
 .form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    width: 100%;
     max-width: 600px;
-    margin: 0 auto;
+    background-color: white;
+    border-radius: 0.75rem;
+    margin-top: 2rem;
+    padding: 1rem;
 }
 
 .form-grid {
@@ -181,12 +190,12 @@
     transition: all 0.2s ease;
 }
 
-.btn-primary {
+.btn-primary-plan {
     background-color: #ff6b35;
     color: white;
 }
 
-.btn-primary:hover {
+.btn-primary-plan:hover {
     background-color: #e05a2b;
 }
 
@@ -194,10 +203,15 @@
     background-color: white;
     color: #374151;
     border: 1px solid #d1d5db;
+    white-space: nowrap;
+
+
 }
 
 .btn-secondary:hover {
     background-color: #f9fafb;
+    white-space: nowrap;
+    width: auto;
 }
 
 /* Stats and metrics */
@@ -212,6 +226,8 @@
     background: white;
     padding: 1.5rem;
     border-radius: 0.75rem;
+    width: 100%;
+    height: 100%;
     text-align: center;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     border: 2px solid transparent;
@@ -235,6 +251,21 @@
     font-weight: 600;
 }
 
+.page-section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    margin: 1rem;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 0.75rem;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     .page-content {
@@ -246,7 +277,14 @@
     }
 
     .page-section {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
         padding: 1.5rem;
+        background-color: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        border-radius: 0.75rem;
+        border: #111827 solid 1px;
     }
 
     .grid-2,
@@ -264,5 +302,14 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
 
+.bottom-plan-trip-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    align-self: center;
+    margin-top: 2rem;
 }

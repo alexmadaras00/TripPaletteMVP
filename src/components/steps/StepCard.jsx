@@ -1,5 +1,5 @@
 export default function StepCard({step,currentStep}) {
-    return (  <div
+    return ( <div
         key={step.number}
         className={`stat-card ${currentStep === step.number ? "selected" : ""}`}
         style={{

@@ -91,7 +91,7 @@ export default function PlanTrip() {
 
                     {/* Progress Steps */}
                     <div className="page-section">
-                        <div className="grid-4">
+                        <div className="list">
                             {steps.map((step) => (
                                 <StepCard currentStep={currentStep} key={step.id} step={step}/>
                             ))}
@@ -122,7 +122,7 @@ export default function PlanTrip() {
                         )}
 
                         {/* NavBar Buttons */}
-                        <div style={{display: "flex", justifyContent: "space-between", marginTop: "2rem"}}>
+                        <div className="bottom-plan-trip-container">
                             <button
                                 className="btn btn-secondary"
                                 onClick={() => setCurrentStep(Math.max(1, currentStep - 1))}
@@ -131,7 +131,7 @@ export default function PlanTrip() {
                                 Back
                             </button>
                             <button
-                                className="btn btn-primary"
+                                className="btn btn-primary-plan"
                                 onClick={() => {
                                     if (currentStep === 4) {
                                         // Save user preferences to localStorage

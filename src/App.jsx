@@ -10,6 +10,7 @@ import ForgotPassword from "./components/ForgotPassword.jsx";
 import PlanTrip from "./components/PlanTrip.jsx";
 import DestinationRecommendations from "./components/DestinationRecommendations.jsx";
 import GoogleForm from "./components/GoogleForm.jsx";
+import TripRoutes from "./components/TripRoutes.jsx";
 
 function App() {
 
@@ -44,6 +45,7 @@ function App() {
                 <Route path="/plan" element={<PlanTrip/>}/>
                 <Route path="/destination-recommendations" element={<DestinationRecommendations />}/>
                 <Route path="/form" element={<GoogleForm />}/>
+                <Route path="/trip-routes" element={<TripRoutes />}/>
             </Routes>
         </BrowserRouter>);
 
