@@ -570,7 +570,7 @@ export default function ScheduleActivities() {
             <div className="dest-container">
                 <h1 className="dest-title">Complete Daily Schedule</h1>
                 <div className="dest-list-container">
-
+                    {}
                 </div>
             </div>
         </div>
