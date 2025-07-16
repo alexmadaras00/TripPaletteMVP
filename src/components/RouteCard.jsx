@@ -1,7 +1,15 @@
 import BookingLink from "./BookingLink.jsx";
 import StationCard from "./StationCard.jsx";
+import {useNavigate} from "react-router-dom";
 
-export default function RouteCard({route, selectedRoute, setSelectedRoute, id, homeLocation, destination}) {
+export default function RouteCard({
+                                      route,
+                                      selectedRoute,
+                                      setSelectedRoute,
+                                      homeLocation,
+                                      destination,
+                                      preferences
+                                  }) {
     console.log("start: ", homeLocation)
     const getRouteIcon = (type) => {
         const icons = {
@@ -37,11 +45,17 @@ export default function RouteCard({route, selectedRoute, setSelectedRoute, id, h
     const getFlightLink = (origin, destination) =>
         `https://www.google.com/flights?hl=en#flt=${origin}.${destination}`;
 
+    const navigate = useNavigate();
+    const navigateToSchedule = () => {
+        const updatedPreferences = { ...preferences, route };
+        sessionStorage.setItem("tripPreferences", JSON.stringify(updatedPreferences));
+        navigate("/schedule");
+    }
     return (
         <div
-            className={`card-route${selectedRoute === id ? "-selected" : ""}`}
+            className={`card-route${selectedRoute === route.id ? "-selected" : ""}`}
             onClick={() => {
-                setSelectedRoute(id);
+                setSelectedRoute(route.id);
             }}
         >
             <div className="card-content">
@@ -101,7 +115,7 @@ export default function RouteCard({route, selectedRoute, setSelectedRoute, id, h
                                 💡 Click any link to check current prices and book tickets directly
                             </div>
 
-                            {selectedRoute === id && (
+                            {selectedRoute === route.id && (
                                 <div className="selected-indicator">
                                     <div className="indicator-dot">
                                         <svg width="10" height="10" viewBox="0 0 24 24" fill="white">
@@ -146,12 +160,13 @@ export default function RouteCard({route, selectedRoute, setSelectedRoute, id, h
                                 title={`Route map for ${route.title}`}
                             />
                         )}
-                        <div className="button-container">
+                        {selectedRoute === route.id && (<div className="button-container">
                             <button className="btn btn-primary"
-                                    onClick={() => (window.location.href = "/schedule")}>
+                                    onClick={() => (
+                                        navigateToSchedule())}>
                                 View Complete Trip Schedule →
                             </button>
-                        </div>
+                        </div>)}
                     </div>
                 </div>
             </div>

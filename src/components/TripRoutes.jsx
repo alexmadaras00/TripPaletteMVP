@@ -284,7 +284,7 @@ export default function TripRoutes() {
         <NavBar/>
         <div className="dest-landing">
             <h1 className="dest-title">Transportation Routes</h1>
-            <p>From {preferences.homeLocation} to {preferences.destination} • {preferences.numberOfDays} days
+            <p>From {preferences.homeLocation} to {preferences.destination.city+", "+preferences.destination.country} • {preferences.numberOfDays} days
                 • {preferences.startDate} - {preferences.endDate}</p>
             <div className="routes-container">
                 <h1 className="dest-title">Your Journey</h1>
@@ -317,7 +317,7 @@ export default function TripRoutes() {
                     {routes.map((route, id) => (
                         <RouteCard route={route} key={id} id={id} selectedRoute={selectedRoute}
                                    setSelectedRoute={setSelectedRoute} homeLocation={homeLocation}
-                                   destination={destination}/>
+                                   destination={destination} preferences={preferences}/>
                     ))}
                 </div>
             </div>

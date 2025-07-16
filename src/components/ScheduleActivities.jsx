@@ -3,6 +3,8 @@ import InputCard from "./InputCard.jsx";
 import PlaceCard from "./PlaceCard.jsx";
 import StatCard from "./StatCard.jsx";
 import "../styles/schedule.css";
+import DayCard from "./DayCard.jsx";
+import {useState} from "react";
 
 export default function ScheduleActivities() {
     const preferencesItem = sessionStorage.getItem("tripPreferences");
@@ -11,7 +13,7 @@ export default function ScheduleActivities() {
     const schedule =  [
         // Day 1 - Arrival
         {
-            day: 1,
+            dayNumber: 1,
             date: "Monday, July 15, 2024",
             title: "Welcome to Paris",
             weather: { temperature: "24°C / 75°F", condition: "Sunny", recommendation: "Perfect weather for walking" },
@@ -80,7 +82,7 @@ export default function ScheduleActivities() {
         },
         // Day 2 - Classic Paris
         {
-            day: 2,
+            dayNumber: 2,
             date: "Tuesday, July 16, 2024",
             title: "Iconic Paris Landmarks",
             weather: {
@@ -149,7 +151,7 @@ export default function ScheduleActivities() {
         },
         // Day 3 - Art & Culture
         {
-            day: 3,
+            dayNumber: 3,
             date: "Wednesday, July 17, 2024",
             title: "Art & Cultural Immersion",
             weather: {
@@ -222,7 +224,7 @@ export default function ScheduleActivities() {
         },
         // Day 4 - Montmartre & Sacré-Cœur
         {
-            day: 4,
+            dayNumber: 4,
             date: "Thursday, July 18, 2024",
             title: "Bohemian Montmartre",
             weather: {
@@ -313,7 +315,7 @@ export default function ScheduleActivities() {
         },
         // Day 5 - Versailles Day Trip
         {
-            day: 5,
+            dayNumber: 5,
             date: "Friday, July 19, 2024",
             title: "Palace of Versailles",
             weather: { temperature: "27°C / 81°F", condition: "Sunny", recommendation: "Great weather for palace gardens" },
@@ -396,7 +398,7 @@ export default function ScheduleActivities() {
         },
         // Day 6 - Latin Quarter & Panthéon
         {
-            day: 6,
+            dayNumber: 6,
             date: "Saturday, July 20, 2024",
             title: "Latin Quarter & Intellectual Paris",
             weather: {
@@ -483,7 +485,7 @@ export default function ScheduleActivities() {
         },
         // Day 7 - Departure
         {
-            day: 7,
+            dayNumber: 7,
             date: "Sunday, July 21, 2024",
             title: "Au Revoir Paris",
             weather: { temperature: "22°C / 72°F", condition: "Clear", recommendation: "Perfect final day" },
@@ -547,10 +549,18 @@ export default function ScheduleActivities() {
             tips: ["Pack the night before", "Keep receipts for tax refunds", "Exchange remaining euros"],
         },
     ];
+    const [selectedSchedule, setSelectedSchedule] = useState(0);
+
+
     const numberOfDays = preferences.numberOfDays;
     const numberOfActivities = schedule.reduce((sum,day)=>sum+day.activities.length,0);
     const dailyBudget = "€"+parseInt(preferences.budget/numberOfDays);
     const stats = [{name: "Days", val: numberOfDays}, {name: "Activities", val: numberOfActivities}, {name: "Daily Budget", val: dailyBudget}];
+    const handleSaveSchedule = () => {
+        preferences.schedule = selectedSchedule;
+        localStorage.setItem("finalTripData", JSON.stringify(preferencesItem))
+        window.location.href = "/trip-summary"
+    }
 
     return (<div>
         <NavBar />
@@ -569,10 +579,24 @@ export default function ScheduleActivities() {
             </div>
             <div className="dest-container">
                 <h1 className="dest-title">Complete Daily Schedule</h1>
-                <div className="dest-list-container">
-                    {}
+                <div className="schedule-list-container">
+                    {schedule.map((day, id) => (
+                        <DayCard day={day} key={id} id={id} selectedSchedule={selectedSchedule} setSelectedSchedule={setSelectedSchedule} />
+                    ))}
                 </div>
             </div>
+            <div className="bottom-section-schedule">
+                <div className="bottom-button-group">
+                    <button className="btn btn-secondary" onClick={() => window.history.back()}>
+                        ← Modify Route
+                    </button>
+                    <button className="btn btn-primary-schedule" onClick={handleSaveSchedule}>
+                        Finalize Trip & View Summary
+                    </button>
+                    <button className="btn btn-secondary">Print Schedule</button>
+                </div>
+            </div>
+
         </div>
 
     </div>);
