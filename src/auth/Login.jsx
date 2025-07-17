@@ -1,10 +1,10 @@
 import {signInWithEmailAndPassword, createUserWithEmailAndPassword} from "firebase/auth";
 import {useEffect, useState} from "react";
 import tripPalette from "../assets/trip_palette.png"
-import {auth} from "../auth/firebase.jsx";
+import {auth} from "./firebase.jsx";
 import "../styles/login.css"
 import {Link, useNavigate} from 'react-router-dom';
-import ScrollToTop from "./ScrollToTop.jsx";
+import ScrollToTop from "../components/ScrollToTop.jsx";
 
 
 export function Login({mode}) {

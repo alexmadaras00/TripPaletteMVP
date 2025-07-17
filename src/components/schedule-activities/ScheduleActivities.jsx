@@ -1,8 +1,8 @@
-import NavBar from "./NavBar.jsx";
-import InputCard from "./InputCard.jsx";
-import PlaceCard from "./PlaceCard.jsx";
-import StatCard from "./StatCard.jsx";
-import "../styles/schedule.css";
+import NavBar from "../NavBar.jsx";
+import InputCard from "../destination-recommendations/InputCard.jsx";
+import PlaceCard from "../destination-recommendations/PlaceCard.jsx";
+import StatCard from "../plan-trip/StatCard.jsx";
+import "../../styles/schedule.css";
 import DayCard from "./DayCard.jsx";
 import {useState} from "react";
 

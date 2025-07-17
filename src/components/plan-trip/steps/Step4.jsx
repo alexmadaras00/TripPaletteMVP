@@ -1,4 +1,4 @@
-import {travelInterests} from "../constants/constants.js";
+import {travelInterests} from "../../constants/constants.js";
 
 
 export default function Step4({selectedInterests, setSelectedInterests}) {

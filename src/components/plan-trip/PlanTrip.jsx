@@ -1,10 +1,10 @@
 import {useState} from "react"
-import NavBar from "./NavBar.jsx";
-import "../styles/navbar.css"
-import "../styles/plan-trip.css"
+import NavBar from "../NavBar.jsx";
+import "../../styles/navbar.css"
+import "../../styles/plan-trip.css"
 import {Link, useNavigate} from "react-router-dom";
 import Autocomplete from "react-google-autocomplete";
-import {steps} from "./constants/constants.js";
+import {steps} from "../constants/constants.js";
 import StepCard from "./steps/StepCard.jsx";
 import Step1 from "./steps/Step1.jsx";
 import Step2 from "./steps/Step2.jsx";

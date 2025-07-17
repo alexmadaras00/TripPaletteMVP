@@ -1,5 +1,5 @@
-import "./constants/colors.js";
-import {COLORS} from "./constants/colors.js";
+import "../constants/colors.js";
+import {COLORS} from "../constants/colors.js";
 import {useNavigate} from "react-router-dom";
 
 

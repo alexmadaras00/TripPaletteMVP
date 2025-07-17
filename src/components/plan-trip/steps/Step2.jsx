@@ -1,4 +1,4 @@
-import {travelGroups} from "../constants/constants.js";
+import {travelGroups} from "../../constants/constants.js";
 
 export default function Step2({selectedTravelGroup, setSelectedTravelGroup}) {
 

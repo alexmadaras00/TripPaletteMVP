@@ -2,16 +2,16 @@ import './App.css'
 
 import NavBar from "./components/NavBar.jsx";
 import HomePage from "./components/HomePage.jsx";
-import {Login} from "./components/Login.jsx";
+import {Login} from "./auth/Login.jsx";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 import ScrollToTop from "./components/ScrollToTop.jsx";
-import ForgotPassword from "./components/ForgotPassword.jsx";
-import PlanTrip from "./components/PlanTrip.jsx";
-import DestinationRecommendations from "./components/DestinationRecommendations.jsx";
+import ForgotPassword from "./auth/ForgotPassword.jsx";
+import PlanTrip from "./components/plan-trip/PlanTrip.jsx";
+import DestinationRecommendations from "./components/destination-recommendations/DestinationRecommendations.jsx";
 import GoogleForm from "./components/GoogleForm.jsx";
-import TripRoutes from "./components/TripRoutes.jsx";
-import ScheduleActivities from "./components/ScheduleActivities.jsx";
+import TripRoutes from "./components/trip-routes/TripRoutes.jsx";
+import ScheduleActivities from "./components/schedule-activities/ScheduleActivities.jsx";
 
 function App() {
 

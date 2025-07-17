@@ -1,7 +1,7 @@
 import {useState} from "react";
-import NavBar from "./NavBar.jsx";
-import "../styles/trip-routes.css";
-import "../styles/plan-trip.css";
+import NavBar from "../NavBar.jsx";
+import "../../styles/trip-routes.css";
+import "../../styles/plan-trip.css";
 import {useNavigate} from "react-router-dom";
 
 import RouteCard from "./RouteCard.jsx";
