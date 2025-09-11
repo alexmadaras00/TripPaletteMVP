@@ -7,14 +7,14 @@ import {useNavigate} from "react-router-dom";
 import RouteCard from "./RouteCard.jsx";
 
 export default function TripRoutes() {
-    const preferencesItem = sessionStorage.getItem("tripPreferences");
+    const preferencesItem = sessionStorage.getItem("tripData");
     const preferences = preferencesItem ? JSON.parse(preferencesItem) : null;
     const [selectedRoute, setSelectedRoute] = useState(0);
     console.log(`Numer of days: ${preferences.numberOfDays}`);
-    console.log(`Selected destination: ${preferences.destination}`);
+    console.log(`Selected destination: ${preferences.destination.city}`);
     const navigate = useNavigate();
     const homeLocation = preferences.homeLocation;
-    const destination = preferences.destination;
+    const destination = preferences.destination.city + ", " + preferences.destination.country;
 
     function navigateBack() {
         navigate("/destination-recommendations");
@@ -284,7 +284,7 @@ export default function TripRoutes() {
         <NavBar/>
         <div className="dest-landing">
             <h1 className="dest-title">Transportation Routes</h1>
-            <p>From {preferences.homeLocation} to {preferences.destination.city+", "+preferences.destination.country} • {preferences.numberOfDays} days
+            <p>From {preferences.homeLocation} to {destination} • {preferences.numberOfDays} days
                 • {preferences.startDate} - {preferences.endDate}</p>
             <div className="routes-container">
                 <h1 className="dest-title">Your Journey</h1>
@@ -298,7 +298,7 @@ export default function TripRoutes() {
                             <span className="arrow">→</span>
                             <div className="departure-dest">
                                 <span className="text-match">🎯 Destination</span>
-                                <p className="text-prop">{preferences.destination}</p>
+                                <p className="text-prop">{destination}</p>
                             </div>
                         </div>
                         <button className="btn btn-secondary" onClick={navigateBack}>Change Destination</button>
@@ -312,7 +312,7 @@ export default function TripRoutes() {
             </div>
             <div className="routes-container">
                 <h1 className="dest-title">Available Transportation Options</h1>
-                <p>Choose the best way to travel from {preferences.homeLocation} to {preferences.destination}</p>
+                <p>Choose the best way to travel from {homeLocation} to {destination}</p>
                 <div className="routes-list-container">
                     {routes.map((route, id) => (
                         <RouteCard route={route} key={id} id={id} selectedRoute={selectedRoute}

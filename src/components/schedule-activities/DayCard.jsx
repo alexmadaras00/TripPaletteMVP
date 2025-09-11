@@ -18,7 +18,7 @@ export default function DayCard({day}) {
         <div className="card-day">
             <div className="card-container">
                 <div>
-                    <h3 className="card-title">
+                    <h3 className="card-day-title">
                         Day {day.dayNumber}: {day.title}
                     </h3>
                     <p className="card-date">{day.date}</p>

@@ -47,8 +47,8 @@ export default function RouteCard({
 
     const navigate = useNavigate();
     const navigateToSchedule = () => {
-        const updatedPreferences = { ...preferences, route };
-        sessionStorage.setItem("tripPreferences", JSON.stringify(updatedPreferences));
+        const updatedPreferences = { ...preferences, route: route};
+        sessionStorage.setItem("tripData", JSON.stringify(updatedPreferences));
         navigate("/schedule");
     }
     return (
@@ -106,7 +106,7 @@ export default function RouteCard({
                                 <div className="text-prop">🔗 Book Your Journey</div>
                                 <div className="booking-links">
                                     {route.bookingLinks.map((bookingLink, index) => (
-                                        <BookingLink key={index} bookingLink={bookingLink}/>
+                                        <BookingLink id={index} key={index} bookingLink={bookingLink}/>
                                     ))}
                                 </div>
                             </div>

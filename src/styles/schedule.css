@@ -3,8 +3,8 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 50%;
     gap: 1rem;
 
 }
@@ -39,7 +39,7 @@
     border-bottom: 2px solid #ff6b35;
 }
 
-.card-title {
+.card-day-title {
     color: #ff6b35;
     font-size: 1.5rem;
 }

@@ -211,4 +211,77 @@ export const properties = [
         name: "Interests",
         image: "❤️"
     }
-]
+];
+export const tabs = [
+    { id: "overview", label: "📊 Overview", icon: "📊" },
+    { id: "schedule", label: "📅 Daily Schedule", icon: "📅" },
+    { id: "transport", label: "🚄 Transportation", icon: "🚄" }
+];
+
+export const beforeYouGo = [
+    {
+        task: "Digital Documentation",
+        description: `Digitize everything. Take photos or scans of your passport, visa, and reservations. Store these securely in a password manager or a cloud service like Google Drive, and also have physical copies in a separate bag from the originals.`,
+        isDone: false,
+        emoji: "📱",
+    },
+    {
+        task: "Stay Connected",
+        description: `Research and purchase an eSIM for your destination, or check your phone provider for a suitable plan. Activate it before you leave so you have data the moment you land.`,
+        isDone: false,
+        emoji: "🌐",
+    },
+    {
+        task: "Smart Financials",
+        description: `Notify your bank of travel plans via their app. Consider using a multi-currency card and have a backup credit card along with some local currency.`,
+        isDone: false,
+        emoji: "💳",
+    },
+    {
+        task: "Travel Apps",
+        description: `Download essential apps: TripIt for itineraries, Google Maps for offline navigation, Google Translate for language, and Rome2Rio for local transport.`,
+        isDone: false,
+        emoji: "🗺️",
+    },
+    {
+        task: "Cybersecurity",
+        description: `Install a VPN on your devices to protect your data on public Wi-Fi. Use a password manager and back up your data before you go.`,
+        isDone: false,
+        emoji: "🔒",
+    },
+];
+
+export const duringYourTrip = [
+    {
+        task: "Digital Security",
+        description: `Be cautious of public Wi-Fi. Use a VPN and avoid logging into sensitive accounts. Enable strong passwords and multi-factor authentication on your devices.`,
+        isDone: false,
+        emoji: "🛡️",
+    },
+    {
+        task: "Navigating your Destination",
+        description: `Use your pre-downloaded offline maps. Use your phone's digital wallet for quick and secure purchases, but have a physical card and cash as a backup.`,
+        isDone: false,
+        emoji: "🧭",
+    },
+    {
+        task: "Health and Safety",
+        description: `Save local emergency numbers and your home country's embassy contact info. Share your live location with a trusted contact and stay informed about local news.`,
+        isDone: false,
+        emoji: "🚨",
+    },
+    {
+        task: "Embrace the Local Experience",
+        description: `Use local food and transport apps. Look for authentic recommendations from locals and be open to new experiences.`,
+        isDone: false,
+        emoji: "🍜",
+    },
+    {
+        task: "Sustainable Travel",
+        description: `Carry a reusable water bottle to reduce plastic waste and support local businesses, restaurants, and artisans to help the local economy.`,
+        isDone: false,
+        emoji: "♻️",
+    },
+];
+
+

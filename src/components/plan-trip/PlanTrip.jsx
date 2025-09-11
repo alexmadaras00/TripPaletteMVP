@@ -148,7 +148,7 @@ export default function PlanTrip() {
                                             interests: selectedInterests,
                                         }
                                         navigate("/destination-recommendations")
-                                        sessionStorage.setItem("tripPreferences",JSON.stringify(tripPreferences));
+                                        sessionStorage.setItem("tripData",JSON.stringify(tripPreferences));
 
                                     } else {
                                         setCurrentStep(Math.min(4, currentStep + 1))

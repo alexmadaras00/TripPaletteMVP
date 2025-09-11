@@ -13,7 +13,7 @@ export default function Step4({selectedInterests, setSelectedInterests}) {
         <div className="section-title">What are your interests?</div>
         <div className="section-subtitle">Help us personalize your trip recommendations</div>
 
-        <div className="grid-3">
+        <div className="grid-2">
             {travelInterests.map((interest) => (
                 <div
                     key={interest.id}

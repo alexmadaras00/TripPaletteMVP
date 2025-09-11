@@ -204,8 +204,7 @@
     background-color: white;
     color: #374151;
     border: 1px solid #d1d5db;
-    white-space: nowrap;
-
+    align-self: center;
 
 }
 
@@ -213,6 +212,7 @@
     background-color: #f9fafb;
     white-space: nowrap;
     width: auto;
+    align-self: center;
 }
 
 /* Stats and metrics */
