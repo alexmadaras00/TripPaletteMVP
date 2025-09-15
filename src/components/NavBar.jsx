@@ -31,7 +31,7 @@ function NavBar() {
                     <li><a href="/"><img src={tripPalette} alt="trip_palette"/></a></li>
                     {/*<li><a href="/explore">Explore</a></li>*/}
                     <li className="nav-item"><a href="/plan">✈️ Plan a Trip</a></li>
-                    <li className="nav-item"><a href="/trips">📋 My Trips</a></li>
+                    <li className="nav-item"><a href="/my-trips">📋 My Trips</a></li>
                     <li className="nav-item"><a href={accountPage}>👤 Account</a></li>
                 </div>
                 <div className="sublist">
