@@ -14,6 +14,7 @@ import TripRoutes from "./components/trip-routes/TripRoutes.jsx";
 import ScheduleActivities from "./components/schedule-activities/ScheduleActivities.jsx";
 import TripSummary from "./components/trip-summary/TripSummary.jsx";
 import MyTrips from "./components/my-trips/MyTrips.jsx";
+import MyProfile from "./components/profile/MyProfile.jsx";
 
 function App() {
 
@@ -52,6 +53,7 @@ function App() {
                 <Route path="/schedule" element={<ScheduleActivities />}/>
                 <Route path="/trip-summary" element={<TripSummary />}/>
                 <Route path="/my-trips" element={<MyTrips />}/>
+                <Route path="/my-profile" element={<MyProfile />}/>
             </Routes>
         </BrowserRouter>);
 
