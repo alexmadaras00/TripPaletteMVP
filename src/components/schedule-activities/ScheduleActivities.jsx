@@ -574,7 +574,6 @@ export default function ScheduleActivities() {
         <div className="dest-landing">
             <h1 className="dest-title">Your Schedule for the {preferences.numberOfDays} Day Trip to {destination}</h1>
             <p> Detailed daily itinerary from arrival to departure</p>
-
             <div className="dest-container">
                 <h1 className="dest-title">Trip Overview</h1>
                 <div className="schedule-upper-container">

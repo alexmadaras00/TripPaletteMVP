@@ -1,6 +1,8 @@
 import "../../styles/my-trips.css";
+import {useEffect} from "react";
 
-export default function TripCard({tripsList,trip, setTripsList}) {
+export default function TripCard({trips, trip, deleteTrips, duplicateTrips}) {
+
     if (!trip) {
         return null;
     }
@@ -33,21 +35,7 @@ export default function TripCard({tripsList,trip, setTripsList}) {
                 return "#6b7280"
         }
     }
-    const handleDuplicateTrip = (trip) => {
-        const newTrip = {
-            ...trip,
-            id: Date.now(),
-            status: "draft",
-            savedDate: new Date().toISOString().split("T")[0],
-        }
-        setTripsList([...tripsList, newTrip])
-    }
 
-    const handleDeleteTrip = (tripId) => {
-        if (confirm("Are you sure you want to delete this trip?")) {
-            setTripsList(tripsList.filter((trip) => trip.id !== tripId))
-        }
-    }
     return (
         <div className="trip-card">
             <div className="trip-card-img" style={{
@@ -104,10 +92,14 @@ export default function TripCard({tripsList,trip, setTripsList}) {
                 <sub className="saved">Saved on {new Date(trip.savedDate).toLocaleDateString()}</sub>
                 <div className="trip-card-bottom">
                     <button className="trip-card-details">View Details</button>
-                    <button className="trip-card-duplicate"  onClick={() => handleDuplicateTrip(trip) } onMouseOver={(e) => (e.target.style.backgroundColor = "#e5e7eb")}
-                            onMouseOut={(e) => (e.target.style.backgroundColor = "#f3f4f6")}>📋</button>
-                    <button className="trip-card-remove" onClick={() => handleDeleteTrip(trip.id)} onMouseOver={(e) => (e.target.style.backgroundColor = "#fecaca")}
-                        onMouseOut={(e) => (e.target.style.backgroundColor = "#fee2e2")}> 🗑️</button>
+                    <button className="trip-card-duplicate" onClick={() => duplicateTrips(trip)}
+                            onMouseOver={(e) => (e.target.style.backgroundColor = "#e5e7eb")}
+                            onMouseOut={(e) => (e.target.style.backgroundColor = "#f3f4f6")}>📋
+                    </button>
+                    <button className="trip-card-remove" onClick={() => deleteTrips(trip.id)}
+                            onMouseOver={(e) => (e.target.style.backgroundColor = "#fecaca")}
+                            onMouseOut={(e) => (e.target.style.backgroundColor = "#fee2e2")}> 🗑️
+                    </button>
                 </div>
             </div>
 

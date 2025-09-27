@@ -153,13 +153,27 @@ export default function MyTrips() {
         },
     ];
 
+    const handleDuplicateTrip = (trip) => {
+        const newTrip = {
+            ...trip,
+            id: Date.now(),
+            status: "draft",
+            savedDate: new Date().toISOString().split("T")[0],
+        }
+        setTrips([...trips, newTrip])
+    };
+    const handleDeleteTrip = (tripId) => {
+        if (confirm("Are you sure you want to delete this trip?")) {
+            setTrips(trips.filter((trip) => trip.id !== tripId))
+        }
+    };
 
     useEffect(() => {
         // Simulate loading from localStorage or API
         setTimeout(() => {
-            setTrips(sampleTrips)
-            setFilteredTrips(sampleTrips)
-            setIsLoading(false)
+            setTrips(sampleTrips);
+            setFilteredTrips(sampleTrips);
+            setIsLoading(false);
         }, 500)
     }, [])
     useEffect(() => {
@@ -263,8 +277,8 @@ export default function MyTrips() {
 
                 <div className="trips-container">
                     <ul className="trips-list">
-                        {sampleTrips.map((tripCard) => (
-                            <TripCard setTripsList={setTrips} tripsList={sampleTrips} trip={tripCard}/>
+                        {trips.map((tripCard) => (
+                            <TripCard deleteTrips={handleDeleteTrip} duplicateTrips={handleDuplicateTrip} trips={trips} trip={tripCard}/>
                         ))}
                     </ul>
                 </div>
