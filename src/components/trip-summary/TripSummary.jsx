@@ -5,7 +5,7 @@ import "../../styles/trip-summary.css";
 import "../../styles/plan-trip.css";
 import NavBar from "../NavBar.jsx";
 import {useNavigate} from "react-router-dom";
-import {beforeYouGo, duringYourTrip} from "../constants/constants.js";
+import {beforeYouGo, duringYourTrip} from "../../constants/constants.js";
 import ChecklistComponent from "./ChecklistComponent.jsx";
 import html2canvas from "html2canvas";
 import TripDocument from "./TripDocument.jsx";

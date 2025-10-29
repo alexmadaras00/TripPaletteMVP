@@ -48,7 +48,7 @@ export default function RouteCard({
     const navigate = useNavigate();
     const navigateToSchedule = () => {
         const updatedPreferences = { ...preferences, route: route};
-        sessionStorage.setItem("tripData", JSON.stringify(updatedPreferences));
+        localStorage.setItem("tripData", JSON.stringify(updatedPreferences));
         navigate("/schedule");
     }
     return (

@@ -1,5 +1,5 @@
-import "../constants/colors.js";
-import {COLORS} from "../constants/colors.js";
+import "../../constants/colors.js";
+import {COLORS} from "../../constants/colors.js";
 import {useNavigate} from "react-router-dom";
 
 
@@ -8,7 +8,7 @@ export default function PlaceCard({place, selectedPlace, setSelectedPlace, prefe
     const navigate = useNavigate();
     const navigateToRoutes = () => {
         const updatedPreferences = {...preferences,destination: place};
-        sessionStorage.setItem("tripData",JSON.stringify(updatedPreferences));
+        localStorage.setItem("tripData",JSON.stringify(updatedPreferences));
         navigate("/trip-routes");
     }
     return (<div className={`card-place${place.id === selectedPlace ? "-selected" : ""}`} onClick={() => {

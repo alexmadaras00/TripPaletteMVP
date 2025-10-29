@@ -2,14 +2,14 @@ import NavBar from "../NavBar.jsx";
 import '../../styles/destination-recommender.css';
 
 import InputCard from "./InputCard.jsx";
-import {properties} from "../constants/constants.js";
+import {properties} from "../../constants/constants.js";
 import PlaceCard from "./PlaceCard.jsx";
 import {useState} from "react";
 
 
 export default function DestinationRecommendations() {
 
-    const preferencesItem = sessionStorage.getItem("tripData");
+    const preferencesItem = localStorage.getItem("tripData");
     const preferences = preferencesItem ? JSON.parse(preferencesItem) : null;
     const [selectedKey,setSelectedKey] = useState(0);
     console.log(preferences);

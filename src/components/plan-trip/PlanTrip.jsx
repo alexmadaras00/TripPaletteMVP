@@ -1,26 +1,49 @@
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import NavBar from "../NavBar.jsx";
 import "../../styles/navbar.css"
 import "../../styles/plan-trip.css"
 import {Link, useNavigate} from "react-router-dom";
 import Autocomplete from "react-google-autocomplete";
-import {steps} from "../constants/constants.js";
+import {steps} from "../../constants/constants.js";
 import StepCard from "./steps/StepCard.jsx";
 import Step1 from "./steps/Step1.jsx";
 import Step2 from "./steps/Step2.jsx";
 import Step3 from "./steps/Step3.jsx";
 import Step4 from "./steps/Step4.jsx";
 
+
+
 export default function PlanTrip() {
-    const [currentStep, setCurrentStep] = useState(1);
-    const [travelPace, setTravelPace] = useState(0);
-    const [budget, setBudget] = useState(3100);
-    const [selectedTravelGroup, setSelectedTravelGroup] = useState("Couple");
-    const [selectedInterests, setSelectedInterests] = useState([]);
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
-    // Change destination to homeLocation
-    const [homeLocation, setHomeLocation] = useState("");
+
+    const getInitialState = (key, defaultValue, type = 'string') => {
+        const savedValue = localStorage.getItem(key);
+        if (!savedValue) {
+            return defaultValue;
+        }
+
+        switch (type) {
+            case 'number':
+                return parseInt(savedValue, 10);
+            case 'array':
+                try {
+                    return JSON.parse(savedValue);
+                } catch (e) {
+                    console.error(`Error parsing JSON file at key number: ${key}`, e);
+                    return defaultValue;
+                }
+            default:
+                return savedValue;
+        }
+    };
+
+    const [currentStep, setCurrentStep] = useState(() => getInitialState('currentStep', 1, 'number'));
+    const [travelPace, setTravelPace] = useState(() => getInitialState('travelPace', 0, 'number'));
+    const [budget, setBudget] = useState(() => getInitialState('budget', 3100, 'number'));
+    const [selectedTravelGroup, setSelectedTravelGroup] = useState(() => getInitialState('selectedTravelGroup', "Couple"));
+    const [selectedInterests, setSelectedInterests] = useState(() => getInitialState('selectedInterests', [], 'array'));
+    const [startDate, setStartDate] = useState(() => getInitialState('startDate', ""));
+    const [endDate, setEndDate] = useState(() => getInitialState('endDate', ""));
+    const [homeLocation, setHomeLocation] = useState(() => getInitialState('homeLocation', ""));
 
     // eslint-disable-next-line no-undef
 
@@ -67,6 +90,29 @@ export default function PlanTrip() {
         }
     }
 
+    const saveCurrentStep=()=> {
+        if (currentStep === 4) {
+            // Save user preferences to localStorage
+            const tripPreferences = {
+                homeLocation: homeLocation,
+                travelPace: getLabel(travelPace),
+                startDate: formatDateDisplay(startDate),
+                endDate: formatDateDisplay(endDate),
+                numberOfDays: calculateTripDuration(),
+                budget: budget,
+                travelGroup: selectedTravelGroup,
+                adults: 2, // You can make this dynamic
+                children: 0,
+                interests: selectedInterests,
+            }
+            localStorage.removeItem("currentStep");
+            localStorage.setItem("tripData",JSON.stringify(tripPreferences));
+            navigate("/destination-recommendations");
+        } else {
+            setCurrentStep(Math.min(4, currentStep + 1));
+        }
+    }
+
     const formatDateDisplay = (dateStr) => {
         const [year, month, day] = dateStr.split("-");
         return `${day}/${month}/${year}`;
@@ -74,8 +120,24 @@ export default function PlanTrip() {
 
     const tripDuration = calculateTripDuration();
     const budgetRange = getDynamicBudgetRange();
-
     const navigate = useNavigate();
+
+    useEffect(() => {
+        // Salvează currentStep (1-4)
+        localStorage.setItem('currentStep', currentStep.toString());
+
+        // Salvează toate celelalte stări
+        localStorage.setItem('travelPace', travelPace.toString());
+        localStorage.setItem('budget', budget.toString());
+        localStorage.setItem('selectedTravelGroup', selectedTravelGroup);
+        localStorage.setItem('startDate', startDate);
+        localStorage.setItem('endDate', endDate);
+        localStorage.setItem('homeLocation', homeLocation);
+
+        // Salvează array-urile ca string JSON
+        localStorage.setItem('selectedInterests', JSON.stringify(selectedInterests));
+
+    }, [currentStep, travelPace, budget, selectedTravelGroup, selectedInterests, startDate, endDate, homeLocation]);
 
 
     return (
@@ -132,28 +194,9 @@ export default function PlanTrip() {
                             </button>
                             <button
                                 className="btn btn-primary-plan"
-                                onClick={() => {
-                                    if (currentStep === 4) {
-                                        // Save user preferences to localStorage
-                                        const tripPreferences = {
-                                            homeLocation: homeLocation,
-                                            travelPace: getLabel(travelPace),
-                                            startDate: formatDateDisplay(startDate),
-                                            endDate: formatDateDisplay(endDate),
-                                            numberOfDays: calculateTripDuration(),
-                                            budget: budget,
-                                            travelGroup: selectedTravelGroup,
-                                            adults: 2, // You can make this dynamic
-                                            children: 0,
-                                            interests: selectedInterests,
-                                        }
-                                        navigate("/destination-recommendations")
-                                        sessionStorage.setItem("tripData",JSON.stringify(tripPreferences));
-
-                                    } else {
-                                        setCurrentStep(Math.min(4, currentStep + 1))
-                                    }
-                                }}
+                                onClick={
+                                   saveCurrentStep
+                            }
                             >
                                 {currentStep === 4 ? "See Destination Recommendations" : "Next"}
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"

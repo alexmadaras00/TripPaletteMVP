@@ -9,7 +9,7 @@ import {useState} from "react";
 
 
 export default function ScheduleActivities() {
-    const preferencesItem = sessionStorage.getItem("tripData");
+    const preferencesItem = localStorage.getItem("tripData");
     const preferences = preferencesItem ? JSON.parse(preferencesItem) : null;
 
     const schedule =  [
@@ -564,8 +564,8 @@ export default function ScheduleActivities() {
     const handleSaveSchedule = () => {
         const updatedPreferences = {...preferences,schedule: schedule};
         console.log("Schedule: ",updatedPreferences.schedule);
-        sessionStorage.setItem("tripData", JSON.stringify(updatedPreferences))
-        console.log("Saving to sessionStorage: ", updatedPreferences.schedule);
+        localStorage.setItem("tripData", JSON.stringify(updatedPreferences))
+        console.log("Saving to localStorage: ", updatedPreferences.schedule);
         navigate("/trip-summary");
     }
 
