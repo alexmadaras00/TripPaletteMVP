@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 import RouteCard from "./RouteCard.jsx";
 
 export default function TripRoutes() {
-    const preferencesItem = sessionStorage.getItem("tripData");
+    const preferencesItem = localStorage.getItem("tripData");
     const preferences = preferencesItem ? JSON.parse(preferencesItem) : null;
     const [selectedRoute, setSelectedRoute] = useState(0);
     console.log(`Numer of days: ${preferences.numberOfDays}`);
