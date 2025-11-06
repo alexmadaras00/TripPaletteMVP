@@ -4,14 +4,12 @@ import "../../styles/navbar.css"
 import "../../styles/plan-trip.css"
 import {Link, useNavigate} from "react-router-dom";
 import Autocomplete from "react-google-autocomplete";
-import {steps} from "../../constants/constants.js";
+import {steps} from "../constants/constants.js";
 import StepCard from "./steps/StepCard.jsx";
 import Step1 from "./steps/Step1.jsx";
 import Step2 from "./steps/Step2.jsx";
 import Step3 from "./steps/Step3.jsx";
 import Step4 from "./steps/Step4.jsx";
-
-
 
 export default function PlanTrip() {
 
@@ -44,6 +42,8 @@ export default function PlanTrip() {
     const [startDate, setStartDate] = useState(() => getInitialState('startDate', ""));
     const [endDate, setEndDate] = useState(() => getInitialState('endDate', ""));
     const [homeLocation, setHomeLocation] = useState(() => getInitialState('homeLocation', ""));
+    const [setAdults, adults]= useState(()=>getInitialState("adults", 2));
+    const [setChildren, children] = useState(()=>getInitialState("children", 0));
 
     // eslint-disable-next-line no-undef
 
@@ -101,8 +101,8 @@ export default function PlanTrip() {
                 numberOfDays: calculateTripDuration(),
                 budget: budget,
                 travelGroup: selectedTravelGroup,
-                adults: 2, // You can make this dynamic
-                children: 0,
+                adults: adults, // You can make this dynamic
+                children: children,
                 interests: selectedInterests,
             }
             localStorage.removeItem("currentStep");
@@ -133,7 +133,8 @@ export default function PlanTrip() {
         localStorage.setItem('startDate', startDate);
         localStorage.setItem('endDate', endDate);
         localStorage.setItem('homeLocation', homeLocation);
-
+        localStorage.setItem("adults", adults);
+        localStorage.setItem("children", children);
         // Salvează array-urile ca string JSON
         localStorage.setItem('selectedInterests', JSON.stringify(selectedInterests));
 
@@ -170,7 +171,12 @@ export default function PlanTrip() {
                         {currentStep === 2 && (
                             <Step2
                                 selectedTravelGroup={selectedTravelGroup}
-                                setSelectedTravelGroup={setSelectedTravelGroup}/>
+                                setSelectedTravelGroup={setSelectedTravelGroup}
+                                setAdults={setAdults}
+                                adults={adults}
+                                setChildren={setChildren}
+                                children={children}
+                            />
                         )}
 
                         {currentStep === 3 && (
@@ -187,8 +193,7 @@ export default function PlanTrip() {
                         <div className="bottom-plan-trip-container">
                             <button
                                 className="btn btn-secondary"
-                                onClick={() => setCurrentStep(Math.max(1, currentStep - 1))}
-                                disabled={currentStep === 1}
+                                onClick={() =>  currentStep>1 ? setCurrentStep(Math.max(1, currentStep - 1)) : navigate("/")}
                             >
                                 Back
                             </button>

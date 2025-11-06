@@ -5,11 +5,15 @@ import "../../styles/trip-summary.css";
 import "../../styles/plan-trip.css";
 import NavBar from "../NavBar.jsx";
 import {useNavigate} from "react-router-dom";
-import {beforeYouGo, duringYourTrip} from "../../constants/constants.js";
+import {beforeYouGo, duringYourTrip} from "../constants/constants.js";
 import ChecklistComponent from "./ChecklistComponent.jsx";
 import html2canvas from "html2canvas";
 import TripDocument from "./TripDocument.jsx";
 import jsPDF from "jspdf";
+import TabOverview from "./TabOverview.jsx";
+import ScheduleTab from "./TabSchedule.jsx";
+import TabTransport from "./TabTransport.jsx";
+import TabSchedule from "./TabSchedule.jsx";
 
 
 export default function TripSummary() {
@@ -23,7 +27,6 @@ export default function TripSummary() {
     const [documentRefAvailable, setDocumentRefAvailable] = useState(false);
     const navigate = useNavigate();
     const componentRef = useRef();
-
 
     useEffect(() => {
         const loadTripData = async () => {
@@ -108,7 +111,7 @@ export default function TripSummary() {
                 setDocumentRefAvailable(true);
             }
         }, 100);
-    }, []);
+    }, [setSchedule, setSelectedDestination, setSelectedRoute, setTripData, setLoading, componentRef, setDocumentRefAvailable, navigate]);
 
     const calculateDuration = () => {
         const start = new Date(tripData.startDate)
@@ -134,15 +137,6 @@ export default function TripSummary() {
     };
     const totalActivities = schedule.reduce((acc, day) => acc + day.activities.length, 0);
     const totalMeals = schedule.reduce((acc, day) => acc + day.activities.filter((a) => a.type === "dining").length, 0);
-
-    const getActivityIcon = (type) => ({
-        transport: "✈️",
-        accommodation: "🏨",
-        dining: "🍽️",
-        sightseeing: "🏛️",
-        cultural: "🎭",
-        activity: "📍"
-    }[type] || "📍");
 
     const handlePrint = () => {
         window.print();
@@ -363,192 +357,44 @@ export default function TripSummary() {
 
                         <div className="tab-content">
                             {activeTab === "overview" && (
-                                <div>
-                                    <div className="stats-list">
-                                        <div className="stat-card">
-                                            <div className="stat-number-summary">{tripData.numberOfDays}</div>
-                                            <div className="stat-label">Days</div>
-                                        </div>
-                                        <div className="stat-card">
-                                            <div className="stat-number-summary">{totalActivities}</div>
-                                            <div className="stat-label">Activities</div>
-                                        </div>
-                                        <div className="stat-card">
-                                            <div className="stat-number-summary">{totalMeals}</div>
-                                            <div className="stat-label">Meals Planned</div>
-                                        </div>
-                                        <div className="stat-card">
-                                            <div
-                                                className="stat-number-summary">{selectedRoute?.carbonFootprint || "0.5 tons"}</div>
-                                            <div className="stat-label-summary">CO2 Footprint</div>
-                                        </div>
-                                    </div>
-                                    <div className="card card-margin">
-                                        <div className="card-content">
-                                            <h3 className="card-title">🎯 Your Interests Covered</h3>
-                                            <div className="interests-container">
-                                                {tripData.interests.map((interest, index) => <span key={index}
-                                                                                                   className="interest-tag">{interest}</span>)}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="grid-2">
-                                        <div className="card">
-                                            <div className="card-content">
-                                                <h3 className="card-title">🌤️ Weather Forecast</h3>
-                                                <div className="weather-info">
-                                                    <div className="weather-temp">☀️ 24°C</div>
-                                                    <div className="weather-desc">Sunny with occasional clouds.</div>
-                                                    <div className="weather-details">
-                                                        • High: 26°C, Low: 18°C <br/>• 10% chance of rain
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="card">
-                                            <div className="card-content">
-                                                <h3 className="card-title">🎒 Packing Essentials</h3>
-                                                <div className="packing-list">
-                                                    <ul className="checklist">
-                                                        {["Comfortable walking shoes", "Light jacket", "Phone charger", "Travel adapter (Type C/E)"].map((item, index) => (
-                                                            <li key={index}><span className="check-icon">✓</span>{item}
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                               <TabOverview selectedRoute={selectedRoute} tripData={tripData} totalMeals={totalMeals} totalActivities={totalActivities} />
                             )}
                             {activeTab === "schedule" && (
-                                <div>
-                                    {schedule.length > 0 ? (
-                                        schedule.map((day,index) => (
-                                            <div key={day.dayNumber} className="card schedule-day-card">
-                                                <div className="card-content">
-                                                    <div className="schedule-day-header">
-                                                        <div>
-                                                            <h3 className="schedule-day-title">Day {day.dayNumber}: {day.title}</h3>
-                                                            <p className="schedule-day-date">{day.date}</p>
-                                                        </div>
-                                                        <div
-                                                            className="schedule-day-activity-count">{day.activities.length} activities
-                                                        </div>
-                                                    </div>
-                                                    <div className="schedule-activity-list">
-                                                        {day.activities.slice(0, 4).map((activity, index) => (
-                                                            <div key={index} className="schedule-activity-item">
-                                                                <div
-                                                                    className="activity-icon-summary">{getActivityIcon(activity.type)}</div>
-                                                                <div className="activity-details">
-                                                                    <div className="activity-time">{activity.time}</div>
-                                                                    <div
-                                                                        className="activity-title">{activity.title}</div>
-                                                                </div>
-                                                            </div>
-                                                        ))}
-                                                        {day.activities.length > 4 && (
-                                                            <div className="view-more-activities">
-                                                                +{day.activities.length - 4} more activities...
-                                                                <button className="btn btn-secondary btn-small"
-                                                                        onClick={() => navigateToSchedule()}>
-                                                                    View Full Day
-                                                                </button>
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))
-                                    ) : (<div className="card">
-                                        <div className="card-content centered-text padded-content">
-                                            <div className="icon-large">📅</div>
-                                            <h3>No detailed schedule</h3>
-                                            <button className="btn btn-primary"
-                                                    onClick={() => navigateToSchedule()}>Create
-                                                Schedule
-                                            </button>
-                                        </div>
-                                    </div>)}
-                                </div>
+                                <TabSchedule schedule={schedule} navigate={navigate}/>
                             )}
                             {activeTab === "transport" && (
-                                <div>
-                                    <div className="card">
-                                        <div className="card-content">
-                                            <h3 className="card-title">🚄 Your Selected Transportation</h3>
-                                            {selectedRoute ? (
-                                                <div className="transport-details">
-                                                    <div className="transport-header">
-                                                        <div>
-                                                            <h4 className="transport-title">{selectedRoute.title}</h4>
-                                                            <div
-                                                                className="transport-meta">Duration: {selectedRoute.duration} •
-                                                                Carbon: {selectedRoute.carbonFootprint}</div>
-                                                        </div>
-                                                        <div className="transport-pricing">
-                                                            <div
-                                                                className="transport-price">${selectedRoute.price}</div>
-                                                            <div className="transport-price-label">per person</div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="booking-info">
-                                                        <h5 className="booking-info-title">📋 Booking Information</h5>
-                                                        <div className="booking-info-details">
-                                                            • Book tickets in advance for best prices
-                                                            <br/>• Arrive 30 minutes early for departures
-                                                        </div>
-                                                    </div>
-                                                    <button className="btn btn-primary"
-                                                            onClick={() => (window.location.href = "/trip-routes")}>📝
-                                                        Book Transportation
-                                                    </button>
-                                                </div>
-                                            ) : (
-                                                <div className="centered-text padded-content">
-                                                    <div className="icon-large">🚄</div>
-                                                    <p>No transportation selected yet</p>
-                                                    <button className="btn btn-primary"
-                                                            onClick={() => (window.location.href = "/trip-routes")}>Select
-                                                        Transportation
-                                                    </button>
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
+                               <TabTransport selectedRoute={selectedRoute} />
                             )}
-                            {activeTab === "checklist" && (
-                                <div>
-                                    <div className="grid-2">
-                                      <ChecklistComponent beforeYouGo={beforeYouGo} duringYourTrip={duringYourTrip} destination={tripData.country}/>
-                                    </div>
-                                    <div className="card card-margin">
-                                        <div className="card-content">
-                                            <h3 className="card-title">🚨 Emergency Information</h3>
-                                            <div className="grid-3">
-                                                <div>
-                                                    <h4 className="emergency-title">🚓 Services</h4>
-                                                    <div className="emergency-details">Police: 17<br/>Medical: 15</div>
-                                                </div>
-                                                <div>
-                                                    <h4 className="emergency-title">🏥 Tourist Helpline</h4>
-                                                    <div className="emergency-details">+33 1 49 52 42 63<br/>24/7
-                                                        assistance
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <h4 className="emergency-title">🏛️ Embassy</h4>
-                                                    <div className="emergency-details">US Embassy Paris<br/>+33 1 43 12
-                                                        22 22
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
+                            {/*{activeTab === "checklist" && (*/}
+                            {/*    <div>*/}
+                            {/*        <div className="grid-2">*/}
+                            {/*          <ChecklistComponent beforeYouGo={beforeYouGo} duringYourTrip={duringYourTrip} destination={tripData.country}/>*/}
+                            {/*        </div>*/}
+                            {/*        <div className="card card-margin">*/}
+                            {/*            <div className="card-content">*/}
+                            {/*                <h3 className="card-title">🚨 Emergency Information</h3>*/}
+                            {/*                <div className="grid-3">*/}
+                            {/*                    <div>*/}
+                            {/*                        <h4 className="emergency-title">🚓 Services</h4>*/}
+                            {/*                        <div className="emergency-details">Police: 17<br/>Medical: 15</div>*/}
+                            {/*                    </div>*/}
+                            {/*                    <div>*/}
+                            {/*                        <h4 className="emergency-title">🏥 Tourist Helpline</h4>*/}
+                            {/*                        <div className="emergency-details">+33 1 49 52 42 63<br/>24/7*/}
+                            {/*                            assistance*/}
+                            {/*                        </div>*/}
+                            {/*                    </div>*/}
+                            {/*                    <div>*/}
+                            {/*                        <h4 className="emergency-title">🏛️ Embassy</h4>*/}
+                            {/*                        <div className="emergency-details">US Embassy Paris<br/>+33 1 43 12*/}
+                            {/*                            22 22*/}
+                            {/*                        </div>*/}
+                            {/*                    </div>*/}
+                            {/*                </div>*/}
+                            {/*            </div>*/}
+                            {/*        </div>*/}
+                            {/*    </div>*/}
+                            {/*)}*/}
                         </div>
                     </div>
                 </div>

@@ -1,12 +1,16 @@
 import {travelGroups} from "../../../constants/constants.js";
 
-export default function Step2({selectedTravelGroup, setSelectedTravelGroup}) {
+export default function Step2({selectedTravelGroup, setSelectedTravelGroup,adults,setAdults,children,setChildren}) {
 
     const optionsAdults = () => {
         if (selectedTravelGroup === "Solo") {
+            setAdults(1);
+            setChildren(0);
             return [<option key="1">1</option>];
         }
         if (selectedTravelGroup === "Couple") {
+            setAdults(2);
+            setChildren(0);
             return [<option key="2">2</option>];
         }
         const options = [];
@@ -49,13 +53,13 @@ export default function Step2({selectedTravelGroup, setSelectedTravelGroup}) {
         <div className="form-grid" style={{marginTop: "2rem"}}>
             <div className="input-group">
                 <label className="input-label">Adults</label>
-                <select className="input-field select-field">
+                <select className="input-field select-field" onChange={e=> setAdults(e.target.value)} value={adults}>
                     {optionsAdults()}
                 </select>
             </div>
             <div className="input-group">
                 <label className="input-label">Children</label>
-                <select className="input-field select-field">
+                <select className="input-field select-field" onChange={e=> setChildren(e.target.value)} value={children}>
                     {optionsChildren()}
                 </select>
             </div>
