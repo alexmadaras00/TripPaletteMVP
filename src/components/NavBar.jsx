@@ -22,7 +22,7 @@ function NavBar() {
 
         return () => unsubscribe();
     }, []);
-    const accountPage = user ? "/profile" : "/login";
+    const accountPage = user ? "/my-profile" : "/login";
 
     return (
         <nav className="App-header">

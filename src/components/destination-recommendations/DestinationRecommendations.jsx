@@ -9,7 +9,7 @@ import {useState} from "react";
 
 export default function DestinationRecommendations() {
 
-    const preferencesItem = sessionStorage.getItem("tripData");
+    const preferencesItem = localStorage.getItem("tripData");
     const preferences = preferencesItem ? JSON.parse(preferencesItem) : null;
     const [selectedKey,setSelectedKey] = useState(0);
     console.log(preferences);

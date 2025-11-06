@@ -7,8 +7,8 @@ export default function PlaceCard({place, selectedPlace, setSelectedPlace, prefe
 
     const navigate = useNavigate();
     const navigateToRoutes = () => {
-        const updatedPreferences = {...preferences,destination: place};
-        sessionStorage.setItem("tripData",JSON.stringify(updatedPreferences));
+        const updatedPreferences  = {...preferences,destination: place};
+        localStorage.setItem("tripData",JSON.stringify(updatedPreferences));
         navigate("/trip-routes");
     }
     return (<div className={`card-place${place.id === selectedPlace ? "-selected" : ""}`} onClick={() => {

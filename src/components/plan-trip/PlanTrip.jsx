@@ -125,8 +125,7 @@ export default function PlanTrip() {
                         <div className="bottom-plan-trip-container">
                             <button
                                 className="btn btn-secondary"
-                                onClick={() => setCurrentStep(Math.max(1, currentStep - 1))}
-                                disabled={currentStep === 1}
+                                onClick={() =>  currentStep>1 ? setCurrentStep(Math.max(1, currentStep - 1)) : navigate("/")}
                             >
                                 Back
                             </button>
@@ -148,7 +147,7 @@ export default function PlanTrip() {
                                             interests: selectedInterests,
                                         }
                                         navigate("/destination-recommendations")
-                                        sessionStorage.setItem("tripData",JSON.stringify(tripPreferences));
+                                        localStorage.setItem("tripData",JSON.stringify(tripPreferences));
 
                                     } else {
                                         setCurrentStep(Math.min(4, currentStep + 1))

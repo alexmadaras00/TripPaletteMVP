@@ -409,7 +409,7 @@ const TripDocument = React.forwardRef(
                     </div>
                 </div>
 
-                {/* Daily Schedule Pages */}
+                {/* Daily TabSchedule Pages */}
                 {finalSchedule.map((day, dayIndex) => (
                     <div
                         key={day.day}
