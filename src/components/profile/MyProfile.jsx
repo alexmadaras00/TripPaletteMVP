@@ -7,7 +7,7 @@ import Autocomplete from "react-google-autocomplete";
 import MyTrips from "../my-trips/MyTrips.jsx";
 import {TravelPreferences} from "./TravelPreferences.jsx";
 import ProfileInfo from "./ProfileInfo.jsx";
-import {POPULAR_DESTINATIONS} from "../constants/constants.js";
+import {POPULAR_DESTINATIONS} from "../../constants/constants.js";
 
 
 export default function MyProfile() {

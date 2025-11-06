@@ -10,7 +10,7 @@ export default function TripRoutes() {
     const preferencesItem = localStorage.getItem("tripData");
     const preferences = preferencesItem ? JSON.parse(preferencesItem) : null;
     const [selectedRoute, setSelectedRoute] = useState(0);
-    console.log(`Numer of days: ${preferences.numberOfDays}`);
+    console.log(`Numer of travellers: ${preferences.adults+preferences.children}`);
     console.log(`Selected destination: ${preferences.destination.city}`);
     const navigate = useNavigate();
     const homeLocation = preferences.homeLocation;

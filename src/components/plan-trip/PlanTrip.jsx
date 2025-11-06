@@ -4,7 +4,7 @@ import "../../styles/navbar.css"
 import "../../styles/plan-trip.css"
 import {Link, useNavigate} from "react-router-dom";
 import Autocomplete from "react-google-autocomplete";
-import {steps} from "../constants/constants.js";
+import {steps} from "../../constants/constants.js";
 import StepCard from "./steps/StepCard.jsx";
 import Step1 from "./steps/Step1.jsx";
 import Step2 from "./steps/Step2.jsx";
@@ -42,10 +42,8 @@ export default function PlanTrip() {
     const [startDate, setStartDate] = useState(() => getInitialState('startDate', ""));
     const [endDate, setEndDate] = useState(() => getInitialState('endDate', ""));
     const [homeLocation, setHomeLocation] = useState(() => getInitialState('homeLocation', ""));
-    const [setAdults, adults]= useState(()=>getInitialState("adults", 2));
-    const [setChildren, children] = useState(()=>getInitialState("children", 0));
-
-    // eslint-disable-next-line no-undef
+    const [adults, setAdults] = useState(() => getInitialState("adults", 2,'number'));
+    const [children, setChildren] = useState(() => getInitialState("children", 0,'number'));
 
     const getLabel = (travelPace) => {
         switch (true) {
@@ -63,7 +61,6 @@ export default function PlanTrip() {
                 return `Travel hustler 🎢`;
         }
     }
-
 
     // Add this function at the top of the component, after the state declarations
     const calculateTripDuration = () => {
@@ -90,7 +87,7 @@ export default function PlanTrip() {
         }
     }
 
-    const saveCurrentStep=()=> {
+    const saveCurrentStep = () => {
         if (currentStep === 4) {
             // Save user preferences to localStorage
             const tripPreferences = {
@@ -106,7 +103,8 @@ export default function PlanTrip() {
                 interests: selectedInterests,
             }
             localStorage.removeItem("currentStep");
-            localStorage.setItem("tripData",JSON.stringify(tripPreferences));
+            localStorage.setItem("tripData", JSON.stringify(tripPreferences));
+            console.log("Trip preferences: ", tripPreferences);
             navigate("/destination-recommendations");
         } else {
             setCurrentStep(Math.min(4, currentStep + 1));
@@ -165,7 +163,7 @@ export default function PlanTrip() {
                     <div className="page-section">
                         {currentStep === 1 && (
                             <Step1 homeLocation={homeLocation} setHomeLocation={setHomeLocation}
-                                  travelPace={travelPace} setTravelPace={setTravelPace} getLabel = {getLabel}/>
+                                   travelPace={travelPace} setTravelPace={setTravelPace} getLabel={getLabel}/>
                         )}
 
                         {currentStep === 2 && (
@@ -193,15 +191,15 @@ export default function PlanTrip() {
                         <div className="bottom-plan-trip-container">
                             <button
                                 className="btn btn-secondary"
-                                onClick={() =>  currentStep>1 ? setCurrentStep(Math.max(1, currentStep - 1)) : navigate("/")}
+                                onClick={() => currentStep > 1 ? setCurrentStep(Math.max(1, currentStep - 1)) : navigate("/")}
                             >
                                 Back
                             </button>
                             <button
                                 className="btn btn-primary-plan"
                                 onClick={
-                                   saveCurrentStep
-                            }
+                                    saveCurrentStep
+                                }
                             >
                                 {currentStep === 4 ? "See Destination Recommendations" : "Next"}
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"

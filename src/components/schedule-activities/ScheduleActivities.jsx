@@ -6,7 +6,7 @@ import "../../styles/schedule.css";
 import DayCard from "./DayCard.jsx";
 import { useNavigate } from "react-router-dom";
 import {useState} from "react";
-import {schedule} from "../constants/constants.js";
+import {schedule} from "../../constants/constants.js";
 
 
 export default function ScheduleActivities() {
