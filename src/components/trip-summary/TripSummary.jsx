@@ -5,13 +5,11 @@ import "../../styles/trip-summary.css";
 import "../../styles/plan-trip.css";
 import NavBar from "../NavBar.jsx";
 import {useNavigate} from "react-router-dom";
-import {beforeYouGo, duringYourTrip} from "../constants/constants.js";
-import ChecklistComponent from "./ChecklistComponent.jsx";
+
 import html2canvas from "html2canvas";
 import TripDocument from "./TripDocument.jsx";
 import jsPDF from "jspdf";
 import TabOverview from "./TabOverview.jsx";
-import ScheduleTab from "./TabSchedule.jsx";
 import TabTransport from "./TabTransport.jsx";
 import TabSchedule from "./TabSchedule.jsx";
 
@@ -113,11 +111,6 @@ export default function TripSummary() {
         }, 100);
     }, [setSchedule, setSelectedDestination, setSelectedRoute, setTripData, setLoading, componentRef, setDocumentRefAvailable, navigate]);
 
-    const calculateDuration = () => {
-        const start = new Date(tripData.startDate)
-        const end = new Date(tripData.endDate)
-        return Math.ceil(Math.abs(end - start) / (1000 * 60 * 60 * 24))
-    }
     const createDate = (dateString) => {
         if (!dateString) return null;
         const parts = dateString.split('/');
@@ -244,24 +237,10 @@ export default function TripSummary() {
         )
     }
 
-
-    const duration = calculateDuration()
-
     const navigateToSchedule = () => {
         navigate("/schedule");
     };
-    const renderChecklist = (list) => {
-        return (
-            <div className="checklist-container">
-                {list.map((task, index) => (
-                    <div key={index} className="checklist-item">
-                        <input type="checkbox" readOnly />
-                        <span>{task}</span>
-                    </div>
-                ))}
-            </div>
-        );
-    };
+
 
     function navigateToHome() {
         navigate("/home");
