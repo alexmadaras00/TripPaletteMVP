@@ -13,7 +13,6 @@ export default function ScheduleActivities() {
     const preferencesItem = localStorage.getItem("tripData");
     const preferences = preferencesItem ? JSON.parse(preferencesItem) : null;
 
-
     const [selectedSchedule, setSelectedSchedule] = useState(0);
 
     const destination = preferences.destination.city + ", " + preferences.destination.country;

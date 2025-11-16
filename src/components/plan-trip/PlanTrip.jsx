@@ -105,6 +105,7 @@ export default function PlanTrip() {
             localStorage.removeItem("currentStep");
             localStorage.setItem("tripData", JSON.stringify(tripPreferences));
             console.log("Trip preferences: ", tripPreferences);
+
             navigate("/destination-recommendations");
         } else {
             setCurrentStep(Math.min(4, currentStep + 1));
