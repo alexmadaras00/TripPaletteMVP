@@ -4,7 +4,7 @@ import {useQuery} from "@tanstack/react-query"
 import InputCard from "./InputCard.jsx";
 import {properties} from "../../constants/constants.js";
 import PlaceCard from "./PlaceCard.jsx";
-import {useEffect, useMemo, useState} from "react";
+import {useMemo, useState} from "react";
 
 import {Loader} from "lucide-react";
 import {ErrorBoundary} from "next/dist/client/components/error-boundary.js";
@@ -16,8 +16,7 @@ export default function DestinationRecommendations() {
         return preferencesItem ? JSON.parse(preferencesItem) : null;
     }, [preferencesItem]);
     const [selectedKey, setSelectedKey] = useState(0);
-
-    const style = preferences.travelPace;
+    const {homeLocation, travelPace, startDate, endDate,numberOfDays, budget,travelGroup,  adults, children, interests } = preferences || {};
 
     const wordsToCammelCase = (str) => {
         return str
@@ -44,7 +43,7 @@ export default function DestinationRecommendations() {
         isError,
         error
     }=useQuery({
-        queryKey: ['destinations', preferences],
+        queryKey: ['destinations', budget, numberOfDays, travelPace, homeLocation, adults, children],
 
         // --- CRITICAL FIX in queryFn ---
         queryFn: async () => {
@@ -64,8 +63,7 @@ export default function DestinationRecommendations() {
             return data;
         },
         // Only run the query if preferences are available
-        enabled: !!preferences && Object.keys(preferences).length > 0,
-        staleTime: 5 * 60 * 1000,
+        enabled: !!preferences && Object.keys(preferences).length > 0
     });
 
     return (
@@ -74,7 +72,7 @@ export default function DestinationRecommendations() {
             <div className="dest-landing">
                 <h1 className="dest-title">Top Destinations For You</h1>
                 <p>AI-curated destinations based on your preferences • {preferences.numberOfDays} days
-                    • {style} style</p>
+                    • {travelPace} style</p>
                 <div className="dest-container">
                     <h1 className="dest-title">Your Travel Preferences</h1>
                     <div className="dest-preferences-container">
@@ -89,7 +87,7 @@ export default function DestinationRecommendations() {
                 </div>
                 <div className="dest-container">
                     <h1 className="dest-title">Recommended Destinations (Top 5)</h1>
-                    <p>Each destination is carefully selected to match your {style} style and interests</p>
+                    <p>Each destination is carefully selected to match your {travelPace} style and interests</p>
 
                     <div className="dest-list-container">
                         {/* Use isLoading directly */}
