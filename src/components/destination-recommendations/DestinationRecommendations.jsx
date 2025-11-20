@@ -1,6 +1,6 @@
 import NavBar from "../NavBar.jsx";
 import '../../styles/destination-recommender.css';
-
+import {useQuery} from "@tanstack/react-query"
 import InputCard from "./InputCard.jsx";
 import {properties} from "../../constants/constants.js";
 import PlaceCard from "./PlaceCard.jsx";
@@ -16,9 +16,7 @@ export default function DestinationRecommendations() {
         return preferencesItem ? JSON.parse(preferencesItem) : null;
     }, [preferencesItem]);
     const [selectedKey, setSelectedKey] = useState(0);
-    const [destinations, setDestinations] = useState([]);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
+
     const style = preferences.travelPace;
 
     const wordsToCammelCase = (str) => {
@@ -40,52 +38,35 @@ export default function DestinationRecommendations() {
 
         return value;
     }
-    useEffect(() => {
-        // const destinations =
-        async function getDestinations() {
-            setLoading(true);
-            setError(null);
-            setDestinations(null);
-            try {
-                // Guard Check: Skip API call if preferences are empty or uninitialized.
-                if (!preferences || Object.keys(preferences).length === 0) {
-                    console.log("Preferences are empty or uninitialized. Skipping API call.");
-                    setLoading(false);
-                    return;
-                }
-                console.log("Before call: ", destinations);
-                // API Call
-                const response = await fetch('http://localhost:3001/api/destinations', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(preferences),
-                });
+    const{
+        data: destinations,
+        isLoading,
+        isError,
+        error
+    }=useQuery({
+        queryKey: ['destinations', preferences],
 
-                const data = await response.json();
-                console.log("Fetched data: ", data);
-                if (!response.ok) {
-                    setError(data.error);
-                    throw new Error(data.error || 'Server returned an error');
-                }
-                console.log("Output response: ", data);
-                localStorage.setItem("topDestinations", JSON.stringify(data));
-                setDestinations(data);
+        // --- CRITICAL FIX in queryFn ---
+        queryFn: async () => {
+            // Your destination endpoint requires a POST with preferences in the body.
+            const response = await fetch("http://localhost:3001/api/destinations", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(preferences), // Send the preferences
+            });
 
-            } catch (err) {
-                console.error("Frontend Fetch Error:", err);
-                setError(err.message);
-            } finally {
-                setLoading(false);
-                console.log("LOADING STATE: ", loading);
-                console.log("ERROR STATE: ", error);
+            const data = await response.json();
+
+            if (!response.ok) {
+                // Throwing an error here sets isError to true
+                throw new Error(data.error || 'Failed to fetch destinations.');
             }
-        }
-
-        console.log(preferences);
-        getDestinations();
-    }, [preferences])
+            return data;
+        },
+        // Only run the query if preferences are available
+        enabled: !!preferences && Object.keys(preferences).length > 0,
+        staleTime: 5 * 60 * 1000,
+    });
 
     return (
         <div>
@@ -111,15 +92,33 @@ export default function DestinationRecommendations() {
                     <p>Each destination is carefully selected to match your {style} style and interests</p>
 
                     <div className="dest-list-container">
-                        {loading && !error &&
-                            <Loader className="p-8 text-center text-xl text-gray-600">Loading your personalized
-                                destinations...</Loader>
-                        }
-                        {error && !destinations && <ErrorBoundary style={{color: 'red'}}>Error: {error}</ErrorBoundary>}
-                        {!loading && !error && destinations && destinations.map((place, id) => (
-                            <PlaceCard place={place} key={id} id={id} selectedPlace={selectedKey}
-                                       setSelectedPlace={setSelectedKey} preferences={preferences}/>
-                        ))}
+                        {/* Use isLoading directly */}
+                        {isLoading && (
+                            <Loader className="p-8 text-center text-xl text-gray-600">
+                                Loading your personalized destinations...
+                            </Loader>
+                        )}
+
+                        {/* Use isError and the error object directly */}
+                        {isError && (
+                            <div style={{ color: 'red', padding: '10px' }}>
+                                Error: {error ? error.message : 'An unknown error occurred.'}
+                            </div>
+                        )}
+
+                        {/* Only render the list when NOT loading, NOT error, and data (destinations) exists */}
+                        {!isLoading && !isError && destinations && destinations.length > 0 && (
+                            destinations.map((place, id) => (
+                                <PlaceCard
+                                    place={place}
+                                    key={id}
+                                    id={id}
+                                    selectedPlace={selectedKey}
+                                    setSelectedPlace={setSelectedKey}
+                                    preferences={preferences}
+                                />
+                            ))
+                        )}
                     </div>
                 </div>
             </div>

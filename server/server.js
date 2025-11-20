@@ -1,14 +1,13 @@
 import express from 'express';
 import cors from 'cors';
 // IMPORTANT: Importing the core logic function
-import { generateTopDestinations } from "./destinations.js";
+import {generateSchedule, generateTopDestinations, generateTravelRoutes} from "./api.js";
 
 const app = express();
 const PORT = 3001;
 
-// -------------------------------------
 // 1. Middleware Setup (MUST COME BEFORE ROUTES)
-// -------------------------------------
+
 // 1. CORS: Allows requests from the React frontend (running on a different port)
 app.use(cors());
 // 2. JSON: Parses incoming JSON request bodies
@@ -39,7 +38,7 @@ app.post('/api/destinations', async (req, res) => {
         console.log("Generating recommendations for preferences:", tripPreferences);
 
         // Call the service layer to generate destinations.
-        // NOTE: Your destinations.js file expects the parameters in this order: (maxRetries, delay, tripPreferences)
+        // NOTE: Your api.js file expects the parameters in this order: (maxRetries, delay, tripPreferences)
         // Adjusting call to match your module:
         const maxRetries = 1;
         const delay = 3000;
@@ -62,6 +61,83 @@ app.post('/api/destinations', async (req, res) => {
         });
     }
 });
+
+app.post('/api/routes', async (req, res) => {
+    // DIAGNOSTIC: Log immediately upon request receipt
+    console.log(">>> REQUEST RECEIVED at /api/routes");
+
+    // 1. Extract the user preferences sent from the React frontend
+    const inputObject = req.body;
+
+    if (!inputObject || Object.keys(inputObject).length === 0) {
+        return res.status(400).json({ error: "Missing trip preference data in request body." });
+    }
+
+    // 2. Call the core logic function
+    try {
+
+        const maxRetries = 1;
+        const delay = 3000;
+
+        const finalRoutes = await generateTravelRoutes(inputObject, maxRetries, delay);
+        // 3. Send the generated and validated JSON array back to the frontend
+        console.log(finalRoutes);
+        res.status(200).json(finalRoutes);
+
+
+    } catch (error) {
+        // Log the detailed error on the server side
+        console.error("--- Server Error (Routes) ---");
+        console.error("Failed to generate the routes:", error);
+        console.error("--------------------");
+
+        // Send an error message to the client
+        res.status(500).json({
+            error: "Failed to generate routes. Check server logs for details (potential API error or validation failure).",
+            details: error.message
+        });
+    }
+});
+
+app.post('/api/schedule', async (req, res) => {
+    // DIAGNOSTIC: Log immediately upon request receipt
+    console.log(">>> REQUEST RECEIVED at /api/schedule");
+
+    // 1. Extract the user preferences sent from the React frontend
+    const inputObject = req.body;
+    console.log("Input object: ",inputObject);
+    if (!inputObject || Object.keys(inputObject).length === 0) {
+        return res.status(400).json({ error: "Missing trip preference data in request body." });
+    }
+
+    // 2. Call the core logic function
+    try {
+
+        const maxRetries = 1;
+        const delay = 3000;
+
+        const finalSchedule = await generateSchedule(inputObject, maxRetries, delay);
+        // 3. Send the generated and validated JSON array back to the frontend
+        console.log(finalSchedule);
+        res.status(200).json(finalSchedule);
+
+
+    } catch (error) {
+        // Log the detailed error on the server side
+        console.error("--- Server Error (Routes) ---");
+        console.error("Failed to generate the routes:", error);
+        console.error("--------------------");
+
+        // Send an error message to the client
+        res.status(500).json({
+            error: "Failed to generate routes. Check server logs for details (potential API error or validation failure).",
+            details: error.message
+        });
+    }
+});
+
+
+
 
 
 // -------------------------------------
