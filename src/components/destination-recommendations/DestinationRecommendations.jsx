@@ -27,7 +27,6 @@ export default function DestinationRecommendations() {
             );
         }
         const displayValueProps = (prop) => {
-
             if (prop === "Travel Dates") {
                 return `From ${preferences["startDate"]} to ${preferences["endDate"]}`;
             }
