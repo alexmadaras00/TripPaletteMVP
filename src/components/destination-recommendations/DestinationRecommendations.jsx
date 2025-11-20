@@ -18,7 +18,7 @@ export default function DestinationRecommendations() {
     const [loading, setLoading] = useState(false);
     console.log(preferences);
     const style = preferences.travelPace;
-    console.log(`Numer of days: ${preferences.numberOfDays}`);
+    console.log(`Number of days: ${preferences.numberOfDays}`);
     const wordsToCammelCase = (str) => {
         return str
             .toLowerCase()
