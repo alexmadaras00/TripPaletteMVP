@@ -52,7 +52,7 @@ const recommendedDestinationsSchema = z.array(DestinationSchema).min(5).max(5); 
 // -------------------------------------
 
 // Load environment variables for the API Key (assuming .env is in the root or accessible)
-config({ path: './.env' });
+config({ path: '../.env' });
 const apiKey = process.env.GEMINI_API_KEY;
 
 if (!apiKey) {
@@ -76,9 +76,12 @@ const ai = new GoogleGenAI(apiKey);
 export async function generateTopDestinations(tripPreferences, maxRetries = 3, delay = 3000) {
 
     // 1. Validate incoming data against the schema
+    console.log("The input before validation");
+    console.log("The object is: ", tripPreferences.valueOf());
     const validatedPreferences = TripPreferencesSchema.parse(tripPreferences);
+    console.log("The input has been parsed");
     const tripPreferencesJson = JSON.stringify(validatedPreferences, null, 2);
-
+    console.log("The input has been checked");
     let currentDelay = delay;
 
     for (let i = 0; i < maxRetries; i++) {

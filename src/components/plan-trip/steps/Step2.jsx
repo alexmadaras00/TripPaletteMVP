@@ -28,8 +28,7 @@ export default function Step2({ selectedTravelGroup, setSelectedTravelGroup, adu
     };
     const handleAdultsChange = (e) => {
         const value = e.target.value;
-        // Convertim valoarea la număr întreg înainte de a o salva în stare
-        // Folosim parseInt sau Number. Daca valoarea este "5+", va salva 5.
+
         const numericValue = parseInt(value, 10) || 0;
         setAdults(numericValue);
     };

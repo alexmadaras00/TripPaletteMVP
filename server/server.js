@@ -43,7 +43,8 @@ app.post('/api/destinations', async (req, res) => {
         // Adjusting call to match your module:
         const maxRetries = 1;
         const delay = 3000;
-        const recommendations = await generateTopDestinations(maxRetries, delay, tripPreferences);
+        console.log("The object before the call is: ",tripPreferences)
+        const recommendations = await generateTopDestinations(tripPreferences, maxRetries, delay );
 
         // 3. Send the generated and validated JSON array back to the frontend
         res.status(200).json(recommendations);
