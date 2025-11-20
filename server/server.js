@@ -45,9 +45,9 @@ app.post('/api/destinations', async (req, res) => {
         const delay = 3000;
         console.log("The object before the call is: ",tripPreferences)
         const recommendations = await generateTopDestinations(tripPreferences, maxRetries, delay );
-
         // 3. Send the generated and validated JSON array back to the frontend
         res.status(200).json(recommendations);
+
 
     } catch (error) {
         // Log the detailed error on the server side
