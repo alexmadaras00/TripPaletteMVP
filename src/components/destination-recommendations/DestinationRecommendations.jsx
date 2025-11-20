@@ -107,7 +107,7 @@ export default function DestinationRecommendations() {
 
                 </div>
                 <div className="dest-container">
-                    <h1 className="dest-title">Reccommended Destinations (Top 5)</h1>
+                    <h1 className="dest-title">Recommended Destinations (Top 5)</h1>
                     <p>Each destination is carefully selected to match your {style} style and interests</p>
 
                     <div className="dest-list-container">
