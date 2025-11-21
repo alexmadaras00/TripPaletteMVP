@@ -82,7 +82,7 @@ The output must be perfectly valid, minified JSON ready for direct parsing. NOTE
 
             const response = await ai.models.generateContent({
                 // FIX: Use gemini-2.5-flash-preview-09-2025 for better structured output support
-                model: "gemini-2.5-flash-preview-09-2025",
+                model: "gemini-2.5-flash",
                 contents: prompt,
                 config: {
                     responseMimeType: "application/json",
@@ -148,7 +148,7 @@ Your primary goal is to generate **1 to 5 distinct, multimodal routes** from the
 Your response **MUST BE ONLY A SINGLE PURE JSON ARRAY** that strictly adheres to the provided schema. The output MUST be ready for direct JSON.parse() without any wrapping code blocks or conversational text.
 `;
             const response = await ai.models.generateContent({
-                model: "gemini-2.5-flash-preview-09-2025",
+                model: "gemini-2.5-flash",
                 contents: prompt,
                 config: {
                     // *** CRITICAL ADDITION: Use structured JSON output ***
@@ -218,7 +218,7 @@ Your response **MUST BE ONLY A SINGLE PURE JSON ARRAY** containing exactly **${n
 `;
 
             const response = await ai.models.generateContent({
-                model: "gemini-2.5-flash-preview-09-2025",
+                model: "gemini-2.5-flash",
                 contents: prompt,
                 config: {
                     responseMimeType: "application/json",

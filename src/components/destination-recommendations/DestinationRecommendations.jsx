@@ -63,7 +63,11 @@ export default function DestinationRecommendations() {
             return data;
         },
         // Only run the query if preferences are available
-        enabled: !!preferences && Object.keys(preferences).length > 0
+        enabled: !!preferences && Object.keys(preferences).length > 0,
+        staleTime: Infinity,    // Cache the data forever (for this session) so we don't re-fetch on page switching
+        gcTime: 1000 * 60 * 10, // Keep unused data in garbage collection for 10 mins
+        retry: 1,               // Retry only once if it fails (helps avoid hitting rate limits repeatedly)
+        refetchOnWindowFocus: false, // Don't refetch just because the user clicked a different tab
     });
 
     return (
