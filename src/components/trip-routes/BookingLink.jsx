@@ -1,7 +1,6 @@
 export default function BookingLink(props) {
     const bookingLink = props.bookingLink;
     return (<a
-        key={props.key}
         href={bookingLink.url}
         target="_blank"
         rel="noopener noreferrer"

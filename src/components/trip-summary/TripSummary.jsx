@@ -5,13 +5,11 @@ import "../../styles/trip-summary.css";
 import "../../styles/plan-trip.css";
 import NavBar from "../NavBar.jsx";
 import {useNavigate} from "react-router-dom";
-import {exampleData} from "../constants/constants.js";
-import ChecklistComponent from "./ChecklistComponent.jsx";
+
 import html2canvas from "html2canvas";
 import TripDocument from "./TripDocument.jsx";
 import jsPDF from "jspdf";
 import TabOverview from "./TabOverview.jsx";
-import ScheduleTab from "./TabSchedule.jsx";
 import TabTransport from "./TabTransport.jsx";
 import TabSchedule from "./TabSchedule.jsx";
 
@@ -32,19 +30,65 @@ export default function TripSummary() {
         const loadTripData = async () => {
             try {
                 const storedData = localStorage.getItem("tripData");
-                console.log(storedData);
+
                 if (storedData) {
                     const data = JSON.parse(storedData);
                     // This is an important fix from your previous code.
                     // The data structure stored in local storage doesn't match the one you were expecting.
                     setTripData(data);
+                    console.log(data);
                     setSelectedDestination(data.destination);
                     setSelectedRoute(data.route);
                     setSchedule(data.schedule || []);
                 } else {
                     // Fallback example data. Note the corrected property names.
-                    console.log("No stored data found. Loading fallback example data.");
-                    // The fallback logic is cleaner because it explicitly sets the states
+                    const exampleData = {
+                        userPreferences: {
+                            homeLocation: "New York, NY",
+                            startDate: "2024-07-15",
+                            endDate: "2024-07-22",
+                            budgetValue: 3500,
+                            travelStyle: "Explorer",
+                            travelGroup: "Couple",
+                            adults: 2,
+                            children: 0,
+                            interests: ["Food & Dining", "History & Culture", "Arts & Entertainment"],
+                            numberOfDays: 8,
+                        },
+                        selectedDestination: {
+                            id: 1,
+                            title: "Paris, France",
+                            city: "Paris",
+                            country: "France",
+                            subtitle: "The City of Light - Perfect for culture and cuisine lovers",
+                            price: 2650,
+                            matchScore: 95,
+                            flag: "🇫🇷",
+                        },
+                        selectedRoute: {
+                            id: 2,
+                            title: "High-Speed Train",
+                            type: "train",
+                            duration: "6h 30m",
+                            price: 2275,
+                            carbonFootprint: "0.2 tons CO2",
+                        },
+                        detailedSchedule: [
+                            {
+                                day: 1,
+                                date: "Monday, July 15, 2024",
+                                title: "Welcome to Paris",
+                                weather: { temperature: "24°C / 75°F", condition: "Sunny" },
+                                activities: [
+                                    { time: "10:00 AM", title: "Arrive at Charles de Gaulle Airport", type: "transport", location: "CDG Airport" },
+                                    { time: "2:00 PM", title: "Check-in at Hotel des Grands Boulevards", type: "accommodation", location: "2nd Arrondissement" },
+                                    { time: "3:30 PM", title: "Welcome Lunch at L'Ami Jean", type: "dining", location: "7th Arrondissement" },
+                                    { time: "5:30 PM", title: "Seine River Walk", type: "activity", location: "From Pont Neuf to Île Saint-Louis" },
+                                    { time: "8:00 PM", title: "Dinner at Le Comptoir du Relais", type: "dining", location: "6th Arrondissement" },
+                                ],
+                            },
+                        ],
+                    };
                     setTripData(exampleData.userPreferences);
                     setSelectedDestination(exampleData.selectedDestination);
                     setSelectedRoute(exampleData.selectedRoute);
@@ -67,11 +111,6 @@ export default function TripSummary() {
         }, 100);
     }, [setSchedule, setSelectedDestination, setSelectedRoute, setTripData, setLoading, componentRef, setDocumentRefAvailable, navigate]);
 
-    const calculateDuration = () => {
-        const start = new Date(tripData.startDate)
-        const end = new Date(tripData.endDate)
-        return Math.ceil(Math.abs(end - start) / (1000 * 60 * 60 * 24))
-    }
     const createDate = (dateString) => {
         if (!dateString) return null;
         const parts = dateString.split('/');
@@ -91,8 +130,6 @@ export default function TripSummary() {
     };
     const totalActivities = schedule.reduce((acc, day) => acc + day.activities.length, 0);
     const totalMeals = schedule.reduce((acc, day) => acc + day.activities.filter((a) => a.type === "dining").length, 0);
-
-
 
     const handlePrint = () => {
         window.print();
@@ -199,6 +236,10 @@ export default function TripSummary() {
             </div>
         )
     }
+
+    const navigateToSchedule = () => {
+        navigate("/schedule");
+    };
 
 
     function navigateToHome() {

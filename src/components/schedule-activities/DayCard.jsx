@@ -59,7 +59,7 @@ export default function DayCard({day}) {
             <div className="day-tips">
                 <h4 className="day-tips-title">💡 Tips for Day {day.dayNumber}</h4>
                 <ul className="day-tips-list">
-                    {day.tips.map((tip, index) => (
+                    {day.tips && day.tips.map((tip, index) => (
                         <li className="day-tip-item" key={index}>
                             {tip}
                         </li>

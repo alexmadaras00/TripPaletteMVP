@@ -2,8 +2,8 @@ import Autocomplete from "react-google-autocomplete";
 
 
 export default function Step1({homeLocation, setHomeLocation, travelPace, setTravelPace, getLabel}) {
-    const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_KEY;
 
+    const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_KEY;
 
     return (<div className="form-container">
         <div className="section-title">Where are you traveling from?</div>
